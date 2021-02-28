@@ -1,0 +1,81 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://yourdomain.com/schemas/test/e.schema.json",
+    "title": "Object E",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "number",
+        "description": "Identifier for the object"
+      },
+      "name": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "aid": {
+        "type": "string",
+        "description": "The identifier of Object A"
+      },
+      "field1": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "field2": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "field3": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "field4": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "field5": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "field6": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "field7": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "field8": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "field9": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "field10": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "field11": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "field12": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "field13": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "field14": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "field15": {
+        "type": "string",
+        "description": "The name of the object"
+      }
+    }
+  }
+  

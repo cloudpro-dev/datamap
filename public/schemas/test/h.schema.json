@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://yourdomain.com/schemas/test/h.schema.json",
+    "title": "Object H",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "number",
+        "description": "Identifier for the object"
+      },
+      "name": {
+        "type": "string",
+        "description": "The name of the object"
+      },
+      "telephone": {
+        "type": "object",
+        "properties": {
+          "ext": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+  

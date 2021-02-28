@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://yourdomain.com/schemas/test/b.schema.json",
+  "title": "Object B",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "number",
+      "description": "Identifier for the object"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the object"
+    },
+    "code": {
+      "type": "string",
+      "description": "The code for the object"
+    }
+  }
+}

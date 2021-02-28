@@ -1,0 +1,95 @@
+{
+	"description": "Map test data",
+	"map": {
+		"input1": {
+			"source": {
+				"$ref": "schemas/test/a.schema.json#/properties/code"
+			},
+			"destination": {
+				"$ref": "schemas/test/c.schema.json#/properties/aid"
+			},
+			"multiplicity": "*-1"
+		},
+		"input2": {
+			"source": {
+				"$ref": "schemas/test/b.schema.json#/properties/code"
+			},
+			"destination": {
+				"$ref": "schemas/test/c.schema.json#/properties/bid"
+			},
+			"multiplicity": "*-1"
+		},
+        "input3": {
+			"source": {
+				"$ref": "schemas/test/c.schema.json#/properties/id"
+			},
+			"destination": {
+				"$ref": "schemas/test/d.schema.json#/properties/cid"
+			},
+			"multiplicity": "*-1"
+		},
+        "input4": {
+			"source": {
+				"$ref": "schemas/test/c.schema.json#/properties/aid"
+			},
+			"destination": {
+				"$ref": "schemas/test/e.schema.json#/properties/aid"
+			},
+			"multiplicity": "*-1"
+		},
+        "input5": {
+			"source": {
+				"$ref": "schemas/test/c.schema.json#/properties/bid"
+			},
+			"destination": {
+				"$ref": "schemas/test/f.schema.json#/properties/bid"
+			},
+			"multiplicity": "*-1"
+		},
+        "input6": {
+			"source": {
+				"$ref": "schemas/test/e.schema.json#/properties/field7"
+			},
+			"destination": {
+				"$ref": "schemas/test/g.schema.json#/properties/field1"
+			},
+			"multiplicity": "*-1"
+		},
+        "input7": {
+			"source": {
+				"$ref": "schemas/test/e.schema.json#/properties/field8"
+			},
+			"destination": {
+				"$ref": "schemas/test/g.schema.json#/properties/field2"
+			},
+			"multiplicity": "*-1"
+		},
+        "input8": {
+			"source": {
+				"$ref": "schemas/test/e.schema.json#/properties/field9"
+			},
+			"destination": {
+				"$ref": "schemas/test/g.schema.json#/properties/field3"
+			},
+			"multiplicity": "*-1"
+		},
+		"input9": {
+			"source": {
+				"$ref": "schemas/test/g.schema.json#/properties/field3"
+			},
+			"destination": {
+				"$ref": "schemas/test/h.schema.json#/properties/name"
+			},
+			"multiplicity": "*-1"
+		},
+		"input10": {
+			"source": {
+				"$ref": "schemas/test/g.schema.json#/properties/field4"
+			},
+			"destination": {
+				"$ref": "schemas/test/h.schema.json#/properties/telephone/properties/number"
+			},
+			"multiplicity": "*-1"
+		}
+	}
+}

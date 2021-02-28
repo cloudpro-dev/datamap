@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "schemas/database/airlines.schema.json",
+  "title": "airlines",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "number",
+      "description": "Identifier for the airline"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the airline"
+    },
+    "tel": {
+      "type": "object",
+      "properties": {
+        "teltype": {
+          "type": "string"
+        },
+        "value": {
+          "type": "object",
+          "properties": {
+            "ext": {
+              "type": "string"
+            },
+            "number": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

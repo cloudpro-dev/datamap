@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://yourdomain.com/schemas/mq/airline.schema.json",
+  "title": "airline",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "number",
+      "description": "Identifier for the airline"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the airline"
+    },
+    "pilots": {
+      "type": "array",
+      "items": {
+        "id": {
+          "type": "number",
+          "description": "Identifier for the pilot"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the pilot"
+        }
+      }
+    }
+  }
+}

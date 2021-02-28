@@ -1,0 +1,24 @@
+{
+  "disableLanguages": "html",
+  "semi": false,
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "options": {
+        "trailingComma": "es5",
+        "tabWidth": 4,
+        "semi": false,
+        "singleQuote": true,
+        "useTabs": false,
+        "bracketSpacing": true
+      }
+    },
+    {
+      "files": ["*.html"],
+      "options": {
+        "tabWidth": 2,
+        "printWidth": 250
+      }
+    }
+  ]
+}

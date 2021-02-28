@@ -1,0 +1,20 @@
+{
+  "name": "parcel-simple",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel serve src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "devDependencies": {
+    "parcel": "next",
+    "prettier": "^2.2.1",
+    "serve-static": "^1.14.1"
+  },
+  "dependencies": {
+    "@apidevtools/json-schema-ref-parser": "^9.0.7",
+    "dagre": "^0.8.5",
+    "jquery": "^3.5.1",
+    "json-pointer": "^0.6.1"
+  }
+}

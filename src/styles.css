@@ -1,0 +1,68 @@
+.panel {
+    border: 1px solid #ccc;
+    width:300px;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index: 10;
+    /*width: 300px;*/
+    /*display: inline-block;
+    margin-right: 200px;*/
+}
+.panel-header {
+    padding: 10px;
+    background-color: #eee;
+}
+.panel-body {
+    /*padding: 10px 20px;*/
+    max-height:200px;
+    overflow-y: scroll;
+    z-index: 10;
+    position:relative;
+}
+
+.clear {
+    clear:both;
+}
+.field {
+    border: 1px solid #ccc;
+    border-width: 0 0 1px 0;
+    padding: 5px;
+    display: block;
+}
+.field em {
+    float:right;
+    color: #ccc;
+    text-transform: uppercase;
+    font-size: 1em;
+}
+.selected {
+    background-color: yellow;
+}
+.matched {
+    background-color: greenyellow;
+}
+
+.toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 34px;
+    z-index: 10;
+    padding: 10px;
+}
+.form-element {
+    margin-right:10px;
+    float:left;
+}
+
+#svg-canvas {
+    z-index: 0;
+    position:absolute;
+    top:50px;
+    left:0px
+}
+
+.selected-line {
+    stroke: #94d31b; 
+}

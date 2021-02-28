@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>My First Parcel App</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js"></script>
+  </head>
+  <body>
+    <div id="toolbar" class="toolbar">
+      <div class="form-element">
+        <input type="text" name="q" id="autocomplete" />
+      </div>
+      <div class="form-element">
+        <input type="checkbox" name="show-unmapped" id="showMappedFieldsOnlyCb" />
+        <label for="showMappedFieldsOnlyCb">
+          Show mapped fields only
+        </label>
+      </div>
+      <div class="form-element">
+        <select id="sortType">
+          <option value="MAP">Map</option>
+          <option value="ALPHANUMERIC">Label</option>
+          <option value="DATATYPE">Data type</option>
+          <option value="MANUAL">Manual (TODO)</option>
+        </select>
+      </div>
+    </div>
+    <div id="panels"></div>
+    <svg id="svg-canvas" style="position:absolute;top:0px;left:0px" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7"></polygon>
+        </marker>
+        <marker id="rect" markerWidth="20" markerHeight="10" refX="3" refY="4" orient="auto">
+          <rect width="20" height="8"></rect>
+        </marker>
+      </defs>
+    </svg>
+  </body>
+</html>

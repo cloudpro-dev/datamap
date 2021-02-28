@@ -1,0 +1,10 @@
+{
+	"description": "Maps data from LN and COBRA to Database",
+	"map": {
+		"identifier": {
+			"source": "database/pilots.schema.json#/properties/id",
+			"destination": "database/airlines.schema.json#/properties/airline_id",
+			"multiplicity": "1-*"
+		}
+	}
+}
