@@ -6,27 +6,35 @@
     "properties": {
       "id": {
         "type": "number",
-        "description": "Identifier for the object"
+        "description": "Identifier for the object",
+        "minLength": 0,
+        "maxLength": 8
       },
       "name": {
         "type": "string",
-        "description": "The name of the object"
+        "description": "The name of the object",
+        "minLength": 3,
+        "maxLength": 255
       },
       "field1": {
         "type": "string",
-        "description": "The code for the object"
+        "description": "The code for the object",
+        "maxLength": 4000
       },
       "field2": {
         "type": "string",
-        "description": "The code for the object"
+        "description": "The code for the object",
+        "maxLength": 4000
       },
       "field3": {
         "type": "string",
-        "description": "The code for the object"
+        "description": "The code for the object",
+        "maxLength": 4000
       },
       "field4": {
         "type": "string",
-        "description": "The code for the object"
+        "description": "The code for the object",
+        "maxLength": 4000
       }
     }
   }

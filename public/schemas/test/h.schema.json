@@ -6,20 +6,28 @@
     "properties": {
       "id": {
         "type": "number",
-        "description": "Identifier for the object"
+        "description": "Identifier for the object",
+        "minLength": 0,
+        "maxLength": 8
       },
       "name": {
         "type": "string",
-        "description": "The name of the object"
+        "description": "The name of the object",
+        "minLength": 3,
+        "maxLength": 255
       },
       "telephone": {
         "type": "object",
         "properties": {
           "ext": {
-            "type": "string"
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 3
           },
           "number": {
-            "type": "string"
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 10
           }
         }
       }

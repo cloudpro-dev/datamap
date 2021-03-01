@@ -1,5 +1,5 @@
 .panel {
-    border: 1px solid #ccc;
+    border: 3px solid #ccc;
     width:300px;
     position:absolute;
     top:0;
@@ -35,6 +35,14 @@
     color: #ccc;
     text-transform: uppercase;
     font-size: 1em;
+    margin-left: 10px;
+    text-align:right;
+}
+.field em.datatype {
+    
+}
+.field em.maxlength {
+    width: 24px
 }
 .selected {
     background-color: yellow;

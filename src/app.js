@@ -153,6 +153,9 @@ const refreshArrows = (svg, data, fields) => {
             let srcParent = $(fields[s].dom[0]).parents('.panel-body')
             let destParent = $(fields[d].dom[0]).parents('.panel-body')
 
+            let srcPanel = $(fields[s].dom[0]).parents('.panel')
+            let destPanel = $(fields[d].dom[0]).parents('.panel')
+
             let connect = {
                 source: {
                     el: fields[s].dom[0],
@@ -160,6 +163,8 @@ const refreshArrows = (svg, data, fields) => {
                     maxY: srcParent.offset().top + srcParent.height(),
                     scrollWidth:
                         srcParent[0].offsetWidth - srcParent[0].clientWidth,
+                    borderWidth:
+                        srcPanel[0].clientTop
                 },
                 destination: {
                     el: fields[d].dom[0],
@@ -167,6 +172,8 @@ const refreshArrows = (svg, data, fields) => {
                     maxY: destParent.offset().top + destParent.height(),
                     scrollWidth:
                         destParent[0].offsetWidth - destParent[0].clientWidth,
+                    borderWidth:
+                        destParent[0].clientTop
                 },
                 color:
                     fields[s].selected || fields[d].selected
@@ -293,10 +300,18 @@ const layoutPanels = (g, nodes, schemas, svg) => {
             left: n.x - n.width / 2,
             top: n.y - n.height / 2,
         })
+        var prevLeft = 0;
         // attach scroll handler to body
-        schemas[v].dom
-            .find('.panel-body')
-            .scroll(() => refreshArrows(svg, state.map, state.fields))
+        schemas[v].dom.find('.panel-body').scroll(function (evt) {
+            // only respond to vertical scroll events
+            var currentLeft = $(this).scrollLeft()
+            if (prevLeft != currentLeft) {
+                prevLeft = currentLeft
+            } else {
+                // refresh arrows on vertical scroll only
+                refreshArrows(svg, state.map, state.fields)
+            }
+        })
     })
 }
 
@@ -415,14 +430,18 @@ async function draw(data) {
 
             // DOM element for Field
             let $el = $(
-                `<div class="field"><i class="icon icon-tag"></i>&nbsp;${fields[key]['label']}<em>${fields[key]['node'].type}</em></div>`
+                `<div class="field">
+                    <i class="icon icon-tag"></i>&nbsp;${fields[key]['label']}
+                    <em class="maxlength">(${fields[key]['node'].maxLength})</em>
+                    <em class="datatype">${fields[key]['node'].type}</em>
+                </div>`
             )
-                // selection handler
-                .on('click', (evt) =>
-                    onFieldSelect(evt, svg, state.map, state.fields)
-                )
-                // add JSON Pointer to the field data
-                .data('key', key)
+            // selection handler
+            .on('click', (evt) =>
+                onFieldSelect(evt, svg, state.map, state.fields)
+            )
+            // add JSON Pointer to the field data
+            .data('key', key)
 
             // store the element reference
             fields[key]['dom'] = $el
