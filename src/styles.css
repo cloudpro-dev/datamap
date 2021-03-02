@@ -28,22 +28,38 @@
     border: 1px solid #ccc;
     border-width: 0 0 1px 0;
     padding: 5px;
-    display: block;
+    display: flex;
+    flex-flow: row nowrap;
+    cursor: pointer;
 }
-.field em {
-    float:right;
+.field div {
     color: #ccc;
-    text-transform: uppercase;
     font-size: 1em;
-    margin-left: 10px;
-    text-align:right;
 }
-.field em.datatype {
-    
+.field div.field-label {
+    flex-grow:1;
+    margin-right: 10px;
 }
-.field em.maxlength {
-    width: 24px
+.field div.field-datatype {
+    text-transform: uppercase;
+    text-align: left;
+    margin-right: 10px;
 }
+.field div.field-maxlength {
+    text-align: right;
+    width: 50px;
+}
+
+.icon:before {
+    content: "";
+    display: block;
+    background: url("tag.png") no-repeat;
+    width: 20px;
+    height: 12px;
+    float: left;
+    margin: 3px 6px 0 0;
+}
+
 .selected {
     background-color: yellow;
 }
@@ -73,4 +89,13 @@
 
 .selected-line {
     stroke: #94d31b; 
+}
+
+.svg-connector {
+    stroke: #94d31b; 
+    fill: #94d31b;
+}
+.svg-connector.selected {
+    stroke: red; 
+    fill: red;
 }

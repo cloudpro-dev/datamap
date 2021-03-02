@@ -44,7 +44,8 @@ Svg.prototype.drawRecentangle = function (x, y, width, height, color) {
     shape.setAttributeNS(null, 'y', y)
     shape.setAttributeNS(null, 'width', width)
     shape.setAttributeNS(null, 'height', height)
-    shape.setAttributeNS(null, 'fill', color)
+    //shape.setAttributeNS(null, 'fill', 'none')
+    shape.setAttributeNS(null, 'stroke', 'none')
     
     return shape;
 }
@@ -105,7 +106,7 @@ Svg.prototype.drawPolyline = function(points, color) {
     
     shape.setAttributeNS(null, 'points', str)
     shape.setAttributeNS(null, 'fill', 'none')
-    shape.setAttributeNS(null, 'stroke', color)
+    //shape.setAttributeNS(null, 'stroke', color)
     // shape.setAttributeNS(null, 'marker-start', 'url(#rect)')
     // shape.setAttributeNS(null, 'marker-end', 'url(#arrowhead)')
     return svg.appendChild(shape)
@@ -166,19 +167,23 @@ Svg.prototype.drawArrow = function(x, y, color) {
     
     var polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon')
     polygon.setAttributeNS(null, 'points', str)
-    polygon.setAttributeNS(null, 'stroke', color)
-    polygon.setAttributeNS(null, 'fill', color)
+    //polygon.setAttributeNS(null, 'stroke', 'none')
+    //polygon.setAttributeNS(null, 'fill', color)
     
     return polygon;
 }
 
-Svg.prototype.drawGraphic = function(rect, line, arrow) {
+Svg.prototype.drawGraphic = function(rect, line, arrow, selected) {
     var svg = this.canvas
     var shape = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+    shape.setAttributeNS(null, 'class', 'svg-connector' + (selected ? ' selected' : ''))
     shape.append(rect);
     shape.append(line);
     shape.append(arrow);
-    return svg.append(shape);
+
+    svg.append(shape)
+
+    return shape;
 }
 
 Svg.prototype.connectDivs = function (config) {
@@ -189,6 +194,7 @@ Svg.prototype.connectDivs = function (config) {
     let slack = config.slack
     let scroll = config.source.scrollWidth
     let border = config.source.borderWidth
+    let selected = config.selected
     
     var circleRadius = 3 // circle radius
     var markerWidth = 20 // marker width
@@ -235,21 +241,25 @@ Svg.prototype.connectDivs = function (config) {
     //points.push({x: x2 - circleRadius, y: y2});
     //this.drawPolyline(points, color)
 
+    let visualOffset = 3;
+
     /* Multi-point lines with rectangle endings */
-    let srcMarker = this.drawRecentangle(x1, y1 - (markerHeight/2), markerWidth, markerHeight, color)
-    let destMarker = this.drawArrow(x2, y2, color);
-    //this.drawRecentangle(x2-markerWidth, y2 - (markerHeight/2), markerWidth, markerHeight, color)
+    let srcMarker = this.drawRecentangle(x1, y1 - (markerHeight/2) + visualOffset, markerWidth, markerHeight, color)
     
+    // co-ordinates are the tip of the arrow
+    let destMarker = this.drawArrow(x2, y2 + visualOffset, color);
+    //this.drawRecentangle(x2-markerWidth, y2 - (markerHeight/2), markerWidth, markerHeight, color)
+
     // points for the polyline
     var points = [];
-    points.push({x: x1, y: y1});
-    points.push({x: x1 + inset, y: y1});
-    points.push({x: x2 - inset, y: y2});
-    points.push({x: x2, y: y2});
+    points.push({x: x1, y: y1 + visualOffset});
+    points.push({x: x1 + inset, y: y1 + visualOffset});
+    points.push({x: x2 - inset, y: y2 + visualOffset});
+    points.push({x: x2, y: y2 + visualOffset});
     
     let connector = this.drawPolyline(points, color)
 
-    return this.drawGraphic(srcMarker, connector, destMarker);
+    return this.drawGraphic(srcMarker, connector, destMarker, selected);
 }
 
 export default Svg

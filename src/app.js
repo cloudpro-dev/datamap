@@ -103,14 +103,12 @@ const getFilteredFields = (fields, e) => {
     let text = $(e.currentTarget).val()
     state.query = text
 
-    // console.log("getFilteredFields", fields, text);
-
     let matches = []
     if (text.length < 2) return matches
 
     for (let m in fields) {
         let parts = fields[m].label.split('/')
-        for (let i = 1; i < parts.length; i++) {
+        for (let i = 0; i < parts.length; i++) {
             if (parts[i].toLowerCase().indexOf(text.toLowerCase()) > -1) {
                 matches.push(m)
             }
@@ -163,8 +161,7 @@ const refreshArrows = (svg, data, fields) => {
                     maxY: srcParent.offset().top + srcParent.height(),
                     scrollWidth:
                         srcParent[0].offsetWidth - srcParent[0].clientWidth,
-                    borderWidth:
-                        srcPanel[0].clientTop
+                    borderWidth: 5 // srcPanel[0].clientTop
                 },
                 destination: {
                     el: fields[d].dom[0],
@@ -172,14 +169,14 @@ const refreshArrows = (svg, data, fields) => {
                     maxY: destParent.offset().top + destParent.height(),
                     scrollWidth:
                         destParent[0].offsetWidth - destParent[0].clientWidth,
-                    borderWidth:
-                        destParent[0].clientTop
+                    borderWidth: 5 // destParent[0].clientTop
                 },
                 color:
                     fields[s].selected || fields[d].selected
                         ? 'red'
                         : 'blue',
                 slack: 0.2,
+                selected: fields[s].selected || fields[d].selected
             }
             // console.log("connect", m, connect);
 
@@ -216,7 +213,7 @@ const onFieldSelect = (event, svg, data, fields) => {
         f.dom.removeClass('selected')
         f.selected = false        
         if(f.mapped == true) {
-            $(f.connector).removeClass('selected-line')
+            $(f.connector).removeClass('selected')
         }
     })
     state.selectedFields = [] // reset
@@ -231,7 +228,7 @@ const onFieldSelect = (event, svg, data, fields) => {
     state.selectedFields.push(fields[key])
     
     if(fields[key].connector) {
-        $(fields[key].connector).addClass('selected-line')
+        $(fields[key].connector).addClass('selected')
     }
 
     // highlight and scroll all ancestors
@@ -243,7 +240,7 @@ const onFieldSelect = (event, svg, data, fields) => {
         dom.addClass('selected')
 
         if(fields[key].connector) {
-            $(fields[key].connector).addClass('selected-line')
+            $(fields[key].connector).addClass('selected')
         }
 
         // dom[0].scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
@@ -259,7 +256,7 @@ const onFieldSelect = (event, svg, data, fields) => {
         dom.addClass('selected')
 
         if(fields[key].connector) {
-            $(fields[key].connector).addClass('selected-line')
+            $(fields[key].connector).addClass('selected')
         }
 
         scrollFieldIntoView(fields[key])
@@ -424,6 +421,7 @@ async function draw(data) {
             fields[key] = {}
             fields[key]['pointer'] = pointer
             fields[key]['label'] = pointer.replaceAll('/properties', '')
+            fields[key]['label'] = fields[key]['label'].substring(1) // strip leading forward-slash
             fields[key]['mapped'] = false
             fields[key]['node'] = JsonPointer.get(json, pointer)
             fields[key]['selected'] = false
@@ -431,9 +429,9 @@ async function draw(data) {
             // DOM element for Field
             let $el = $(
                 `<div class="field">
-                    <i class="icon icon-tag"></i>&nbsp;${fields[key]['label']}
-                    <em class="maxlength">(${fields[key]['node'].maxLength})</em>
-                    <em class="datatype">${fields[key]['node'].type}</em>
+                    <div class="field-label"><i class="icon icon-tag"></i>${fields[key]['label']}</div>
+                    <div class="field-datatype">${fields[key]['node'].type}</div>
+                    <div class="field-maxlength">(${fields[key]['node'].maxLength})</div>
                 </div>`
             )
             // selection handler
