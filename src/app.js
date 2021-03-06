@@ -615,7 +615,6 @@ $(function () {
         // load the map
         let response = await fetch(filename)
         state.map = await response.json()
-        // console.log('map', state.map)
 
         // draw the map
         await draw(state.map)
