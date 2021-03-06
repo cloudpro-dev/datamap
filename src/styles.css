@@ -110,3 +110,14 @@
 .svg-connector.selected.anim rect {
     width: 25px;
 }
+.svg-connector g text {
+    display: none;
+}
+.svg-connector g text.anim {
+    display: block;
+}
+/*
+.svg-connector.selected.anim g text {
+    display: block;
+}
+*/

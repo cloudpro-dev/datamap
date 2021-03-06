@@ -204,18 +204,47 @@ const onFieldSelect = (event, data, fields) => {
             f.dom.removeClass('selected')
             $(f.connector).removeClass('selected')
             $(f.connector).removeClass('anim')
+            if(f.connector) {
+                $('g text', f.connector).removeClass('anim');
+            } 
         })
     }
 
+    // toggle selection of the Field on and off
     if(!event.shiftKey) {
-        // shift is not pressed
-
-        // clear all existing selections
-        clearFields(state.selectedFields)
-        state.selectedFields = []
+        // shift is not pressed (single select)
+        
+        // if the clicked field is already selected we do not want
+        // to run the clearFields method on the field or any 
+        // ancestors/descendants
+        var selected = state.fields[key].selected;
+        if(selected) {
+            let fieldsToKeep = [
+                state.fields[key], 
+                ...getAncestors(data, key).map(m => state.fields[m]), 
+                ...getDescendants(data, key).map(m => state.fields[m])
+            ]
+    
+            let fieldsToClear = [];
+            state.selectedFields.forEach(f => {
+                if(fieldsToKeep.indexOf(f) < 0) {
+                    fieldsToClear.push(f); // discard
+                }
+            })
+            clearFields(fieldsToClear)
+            state.selectedFields = fieldsToKeep
+            return;
+        }
+        else {
+            // field is not already selected so we should clear everything
+            // before the code below runs and selects the field and any
+            // ancestors/descedants
+            clearFields(state.selectedFields)
+            state.selectedFields = []
+        }
     }
     else {
-        // shift is pressed
+        // shift is pressed (multi-select)
         
         // true if the clicked field is already selected
         var selected = state.fields[key].selected;
@@ -252,8 +281,14 @@ const onFieldSelect = (event, data, fields) => {
     // animate the Field connector
     let animateMarker = function(field) {
         if(field.connector) {
+            // fires for expand and collapse
+            $(field.connector).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', e => {
+                if(field.selected) {
+                    $('g text', $(e.currentTarget)).addClass('anim')
+                    field.animComplete = true;
+                }
+            })
             $(field.connector).addClass('anim')
-            field.animComplete = true;
         }
     }
 
@@ -265,6 +300,8 @@ const onFieldSelect = (event, data, fields) => {
 
     // highlight and scroll all descedants
     getDescendants(data, key).forEach(key => selectField(key))
+
+    // console.log("actions", actions);
 
     // wait for all scrolling to complete before we add anim class to the markers
     Promise.all(actions).then(fields => fields.forEach(f => animateMarker(f)))
@@ -488,7 +525,9 @@ async function draw(data) {
             // DOM element for Field
             let $el = $(
                 `<div class="field" unselectable="on">
-                    <div class="field-label" unselectable="on"><i class="icon icon-tag"></i>${fields[key]['label']}</div>
+                    <div class="field-label" unselectable="on">
+                        <i class="icon icon-tag"></i>${fields[key]['label']}${fields[key]['node'].minLength > 0 ? ' <em class="mandatory">(*)</em>' : ''}
+                    </div>
                     <div class="field-datatype" unselectable="on">${fields[key]['node'].type}</div>
                     <div class="field-maxlength" unselectable="on">(${fields[key]['node'].maxLength})</div>
                 </div>`

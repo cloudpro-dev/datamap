@@ -34,11 +34,12 @@ Svg.prototype.drawCircle = function (x, y, radius, color) {
     svg.appendChild(shape)
 }
 
-Svg.prototype.drawRecentangle = function (x, y, width, height, color) {
-    var svg = this.canvas 
+Svg.prototype.drawRecentangle = function (x, y, width, height, anim) {
     
-    // equivalent to: <rect x="0" y="0" width="10" height="10" fill="blue" />
+    // equivalent to: <g>
+    var group = document.createElementNS('http://www.w3.org/2000/svg', 'g')
 
+    // equivalent to: <rect x="0" y="0" width="10" height="10" fill="blue" />
     var shape = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
     shape.setAttributeNS(null, 'x', x)
     shape.setAttributeNS(null, 'y', y)
@@ -46,8 +47,27 @@ Svg.prototype.drawRecentangle = function (x, y, width, height, color) {
     shape.setAttributeNS(null, 'height', height)
     //shape.setAttributeNS(null, 'fill', 'none')
     shape.setAttributeNS(null, 'stroke', 'none')
+
+    // equivalent to: <text x="0" y="50">Hello</text>
+    var label = document.createElementNS('http://www.w3.org/2000/svg', 'text')
+    label.setAttributeNS(null, 'x', x + 5)
+    label.setAttributeNS(null, 'y', y + 10)
+    label.setAttributeNS(null, 'font-family', 'Verdana')
+    label.setAttributeNS(null, 'font-size', 8)
+    label.setAttributeNS(null, 'fill', 'white')
+    label.setAttributeNS(null, 'stroke', 'none')
+    if(anim === true) {
+        label.setAttributeNS(null, 'class', 'anim')
+    }
+    // label.setAttributeNS(null, 'display', 'none')
+    //label.setAttributeNS(null, 'width', 30)
+    //label.setAttributeNS(null, 'height', 20)
+    label.append('0..*');
+
+    group.appendChild(shape);
+    group.appendChild(label);
     
-    return shape;
+    return group;
 }
 
 Svg.prototype.drawCurvedLine = function (x1, y1, x2, y2, color, slack) {
@@ -177,9 +197,9 @@ Svg.prototype.drawGraphic = function(rect, line, arrow, selected, anim) {
     var svg = this.canvas
     var shape = document.createElementNS('http://www.w3.org/2000/svg', 'g')
     shape.setAttributeNS(null, 'class', 'svg-connector' + (selected ? ' selected' : '') + (anim ? ' anim' : ''))
-    shape.append(rect);
     shape.append(line);
     shape.append(arrow);
+    shape.append(rect);
 
     svg.append(shape)
 
@@ -200,9 +220,9 @@ Svg.prototype.connectDivs = function (config) {
     let anim = config.source.animComplete
     
     var circleRadius = 3 // circle radius
-    var markerWidth = 17 // marker width
-    var markerHeight = 10 // marker height
-    var inset = 30; // inset for the lines from panel edge
+    var markerWidth = 20 // marker width
+    var markerHeight = 13 // marker height
+    var inset = 40; // inset for the lines from panel edge
 
     // source
     var leftPos = this.findAbsolutePosition(left)
@@ -247,7 +267,7 @@ Svg.prototype.connectDivs = function (config) {
     let visualOffset = 3;
 
     /* Multi-point lines with rectangle endings */
-    let srcMarker = this.drawRecentangle(x1, y1 - (markerHeight/2) + visualOffset, markerWidth, markerHeight, color)
+    let srcMarker = this.drawRecentangle(x1, y1 - (markerHeight/2) + visualOffset, markerWidth, markerHeight, anim)
     
     // co-ordinates are the tip of the arrow
     let destMarker = this.drawArrow(x2, y2 + visualOffset, color);
