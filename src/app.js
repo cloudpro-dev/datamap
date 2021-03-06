@@ -140,23 +140,14 @@ const onAutoComplete = (evt, fields, matched) => {
     }
 }
 
-
-const animateMarker = function(field) {
-    if(field.connector) {
-        $(field.connector).addClass('anim')
-        field.animComplete = true;
-    }
-}
-
+/* Calculate if a field is currently visible in the scrollable panel */
 const isFieldVisible = function (element, parent, fullyInView) {
-    // console.log("isFieldVisible", element, parent)
-    
     var pageTop = $(parent).offset().top;
     var pageBottom = pageTop + $(parent).height();
     var elementTop = $(element).offset().top;
     var elementBottom = elementTop + $(element).height();
 
-    // console.log("scrollStats", pageTop, pageBottom, elementTop, elementBottom);
+    //console.log("scrollStats", pageTop, pageBottom, elementTop, elementBottom);
 
     if (fullyInView === true) {
         return ((pageTop < elementTop) && (pageBottom > elementBottom));
@@ -167,61 +158,38 @@ const isFieldVisible = function (element, parent, fullyInView) {
 
 /** Scroll a field into view within a Panel */
 const scrollFieldIntoView = function(field) {
-    
-    let listContainer = field.dom.parent('.panel-body')[0]
+    // create a promise that which will be set to resolved
+    // once the scroll has completed on the panel
+    return new Promise((resolve) => {
+        let listContainer = field.dom.parent('.panel-body')[0]
 
-    // console.log("scrollFieldIntoView", isFieldVisible(field.dom, listContainer, false))
-
-    if(isFieldVisible(field.dom, listContainer, true)) {
-        // console.log("field is visible", field.dom[0])
-        // just add the "anim" class to the field connector
-        // onScrollEnded(null);
-        animateMarker(field);
-    }
-    else {
-        // console.log("field is invisible", field.dom[0])
-        // trigger the scroll
-        // a separate listener will see scroll end event and add
-        // the "anim" class to the field connector
-        // overly complex as Chrome will not scroll two elements smoothly at the same time
-        let listItem = field.dom[0]
-        let listItemCenterPosition =
-            listItem.offsetTop -
-            (listContainer.getBoundingClientRect().height -
-                listItem.getBoundingClientRect().height) /
-                2
-        listContainer.scrollTo({
-            top: listItemCenterPosition,
-            behavior: 'smooth'
-        })
-    }
-}
-
-/* Fire when the horizontal scrolling on a panel is complete */
-const onScrollEnded = function(evt) {
-    // console.log("Scroll ended", evt.currentTarget);
-
-    // now we want to extend the marker
-    // but only if it is not already extended
-
-    // state should now contain all selected field which we can extend the markers on
-
-    var schema = $(evt.currentTarget).parent('.panel').data('key');
-    state.schemas[schema].fields.forEach(f => {
-        if(f.selected === true) {
-            console.log("anim complete", f.dom[0], f.key, f.connector)
-            animateMarker(f);
+        if(isFieldVisible(field.dom, listContainer, false)) {
+            resolve(field);
+        }
+        else {
+            // attach scroll end listener
+            var timeoutId = 0;
+            $(listContainer).on('scroll', evt => {
+                clearTimeout(timeoutId)
+                timeoutId = setTimeout(
+                    () => { resolve(field) },
+                    100
+                )
+            })
+            // trigger the scroll
+            let listItem = field.dom[0]
+            let listItemCenterPosition =
+                listItem.offsetTop -
+                (listContainer.getBoundingClientRect().height -
+                    listItem.getBoundingClientRect().height) /
+                    2
+            listContainer.scrollTo({
+                top: listItemCenterPosition,
+                behavior: 'smooth'
+            })
         }
     });
-
-    // TODO we are doing this on ALL the field, but some of them might not be ready yet!
-    /*state.selectedFields.forEach(f => {
-        // console.log("anim complete", f.connector, f.key)
-        $(f.connector).addClass('anim')
-        f.animComplete = true;
-    })*/
 }
-
 
 /** Field selection event handler */
 const onFieldSelect = (event, svg, data, fields) => {
@@ -240,34 +208,39 @@ const onFieldSelect = (event, svg, data, fields) => {
     // get the JSON Pointer path from DOM element
     let key = $(event.currentTarget).data('key')
 
-    // highlight selected Fields
-    let select = (id) => {
+    // contains all the scroll promises
+    var actions = []
+    
+    // select a Field in the panel
+    let selectField = (id) => {
         fields[id].selected = true
         fields[id].dom.addClass('selected')
         state.selectedFields.push(fields[id])
         if(fields[id].connector) {
             $(fields[id].connector).addClass('selected')
         }
+        actions.push(scrollFieldIntoView(fields[id]))
+    }
+
+    // animate the Field connector
+    let animateMarker = function(field) {
+        if(field.connector) {
+            $(field.connector).addClass('anim')
+            field.animComplete = true;
+        }
     }
 
     // select the field
-    select(key);
-
-    // the assumption here is that the field that was 
-    // clicked will already be visible 
-    animateMarker(fields[key]);
-
+    selectField(key)
+    
     // highlight and scroll all ancestors
-    getAncestors(data, key).forEach((key) => {
-        select(key)
-        scrollFieldIntoView(fields[key])
-    })
+    getAncestors(data, key).forEach(key => selectField(key))
 
     // highlight and scroll all descedants
-    getDescendants(data, key).forEach((key) => {
-        select(key)
-        scrollFieldIntoView(fields[key])
-    })
+    getDescendants(data, key).forEach(key => selectField(key))
+
+    // wait for all scrolling to complete before we add anim class to the markers
+    Promise.all(actions).then(fields => fields.forEach(f => animateMarker(f)))
 }
 
 
@@ -303,16 +276,8 @@ const layoutPanels = (g, nodes, schemas, svg) => {
             top: n.y - n.height / 2,
         })
         var prevLeft = 0;
-        var timeoutId = 0;
-        // attach scroll handler to body
         
         schemas[v].dom.find('.panel-body').scroll(function (evt) {
-            clearTimeout(timeoutId)
-            timeoutId = setTimeout(
-                // TODO handler is updating all SELECTED fields instead of just one
-                onScrollEnded.bind(null, evt),
-                100
-            )
             // only respond to vertical scroll events
             var currentLeft = $(this).scrollLeft()
             if (prevLeft != currentLeft) {
@@ -366,12 +331,12 @@ const refreshArrows = (svg, data, fields) => {
             }
             // console.log("connect", m, connect);
 
-            // generate an SVG line between source and desintation
+            // generate an SVG line between source and destination
             let polyline = svg.connectDivs(connect);
             
             // store reference to the SVG connector
-            // fields[s].connector = polyline;
-            fields[d].connector = polyline;
+            fields[s].connector = polyline;
+            // fields[d].connector = polyline;
         }
     }
 }
@@ -525,7 +490,6 @@ async function draw(data) {
         $('#panels').append($tpl)
     }
 
-    // state.schemas = schemas;
     // console.log('schemas', schemas)
 
     // update "mapped" attribute
