@@ -495,7 +495,7 @@ async function draw(data) {
         // create DOM panel
         let $tpl = $(
             `<div class="panel">
-                <div class="panel-header">${path}</div>
+                <div class="panel-header">${json.title}</div>
                 <div class="panel-body"></div>
             </div>`
         ).data('key', path)
