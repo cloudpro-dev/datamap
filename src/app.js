@@ -199,15 +199,11 @@ const onFieldSelect = (event, data, fields) => {
 
     let clearFields = (fs) => {
         fs.forEach((f) => {
+            f.selected = false
+            f.animComplete = false;      
             f.dom.removeClass('selected')
-            f.selected = false        
-            if(f.mapped == true) {
-                $(f.connector).removeClass('selected')
-                $(f.connector).removeClass('anim')
-                f.animComplete = false;
-            }
-            // remove de-selected field from state
-            // state.selectedFields.splice(state.selectedFields.indexOf(f), 1)
+            $(f.connector).removeClass('selected')
+            $(f.connector).removeClass('anim')
         })
     }
 
@@ -523,7 +519,7 @@ async function draw(data) {
 
     // console.log('schemas', schemas)
 
-    // update "mapped" attribute
+    // set "mapped" attribute for use by checkbox
     for (let m in data.map) {
         let s = data.map[m].source['$ref']
         let d = data.map[m].destination['$ref']
