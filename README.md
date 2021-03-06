@@ -64,18 +64,18 @@ Ordered list of `transformations` which is defined in the map against a `source`
 The following tasks are considered in scope for this POC:
 
 1. Line rendering improvements including flattened arrow ends as per the original ![Concept Design](images/introduction2.jpg)
-2. Design a way of *defining* and *visualing* any transformation between a source and destination field
-3. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
-4. Manual ordering for the fields within a panel
-5. Custom layout mode for the schema Panels using DnD to position
-6. Resizable panels by dragging edges (vertically only)
-6. Multi-select for fields in panel with dependency highlighting
-7. Auto-complete for the search field which allows you to quickly select just a single field
-8. Schema view mode which shows the dependencies between the schemas but does not show the fields
-9. Mini-map which allows dragging around the diagram
-10. Pre-defined zoom levels
-11. Labellng improvments including labels on arrows using the name of the key from the map, and multiplicity shown on the arrow ends
-
+2. Multi-select for fields in panel with dependency highlighting
+3. Labellng improvments including labels on arrows using the name of the key from the map, and multiplicity shown on the arrow ends
+4. Schema view mode which shows the dependencies between the schemas but does not show the fields
+5. Meta data for fields that can store additional information e.g. UI field name, technical label, description, etc (use seperate `meta` element for data)
+6. Design a way of *defining* and *visualing* any transformation between a source and destination field
+7. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
+8. Manual ordering for the fields within a panel
+9. Custom layout mode for the schema Panels using DnD to position
+10. Resizable panels by dragging edges (vertically only)
+11. Auto-complete for the search field which allows you to quickly select just a single field
+12. Mini-map which allows dragging around the diagram
+13. Pre-defined zoom levels
 
 # Field Flow
 
