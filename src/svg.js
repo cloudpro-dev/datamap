@@ -173,15 +173,17 @@ Svg.prototype.drawArrow = function(x, y, color) {
     return polygon;
 }
 
-Svg.prototype.drawGraphic = function(rect, line, arrow, selected) {
+Svg.prototype.drawGraphic = function(rect, line, arrow, selected, anim) {
     var svg = this.canvas
     var shape = document.createElementNS('http://www.w3.org/2000/svg', 'g')
-    shape.setAttributeNS(null, 'class', 'svg-connector' + (selected ? ' selected' : ''))
+    shape.setAttributeNS(null, 'class', 'svg-connector' + (selected ? ' selected' : '') + (anim ? ' anim' : ''))
     shape.append(rect);
     shape.append(line);
     shape.append(arrow);
 
     svg.append(shape)
+
+    // console.log("drawGraphic", shape, anim)
 
     return shape;
 }
@@ -195,10 +197,11 @@ Svg.prototype.connectDivs = function (config) {
     let scroll = config.source.scrollWidth
     let border = config.source.borderWidth
     let selected = config.selected
+    let anim = config.source.animComplete
     
     var circleRadius = 3 // circle radius
-    var markerWidth = 20 // marker width
-    var markerHeight = 8 // marker height
+    var markerWidth = 17 // marker width
+    var markerHeight = 10 // marker height
     var inset = 30; // inset for the lines from panel edge
 
     // source
@@ -259,7 +262,7 @@ Svg.prototype.connectDivs = function (config) {
     
     let connector = this.drawPolyline(points, color)
 
-    return this.drawGraphic(srcMarker, connector, destMarker, selected);
+    return this.drawGraphic(srcMarker, connector, destMarker, selected, anim);
 }
 
 export default Svg

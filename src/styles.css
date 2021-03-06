@@ -99,3 +99,10 @@
     stroke: red; 
     fill: red;
 }
+.svg-connector rect {
+    /* size change is animated */
+    transition: width 500ms ease-in-out, height 500ms ease-in-out;
+}
+.svg-connector.selected.anim rect {
+    width: 25px;
+}
