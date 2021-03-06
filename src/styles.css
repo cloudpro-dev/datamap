@@ -106,12 +106,17 @@
 .svg-connector rect {
     /* size change is animated */
     transition: width 500ms ease-in-out, height 500ms ease-in-out;
+    stroke: none;
 }
 .svg-connector.selected.anim rect {
     width: 25px;
 }
 .svg-connector g text {
     display: none;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 8px;
+    fill: white;
+    stroke: none;
 }
 .svg-connector g text.anim {
     display: block;

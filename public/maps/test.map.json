@@ -8,7 +8,7 @@
 			"destination": {
 				"$ref": "schemas/test/c.schema.json#/properties/aid"
 			},
-			"multiplicity": "*-1"
+			"multiplicity": "1-*"
 		},
 		"input2": {
 			"source": {
@@ -17,7 +17,7 @@
 			"destination": {
 				"$ref": "schemas/test/c.schema.json#/properties/bid"
 			},
-			"multiplicity": "*-1"
+			"multiplicity": "0-*"
 		},
         "input3": {
 			"source": {
@@ -26,7 +26,7 @@
 			"destination": {
 				"$ref": "schemas/test/d.schema.json#/properties/cid"
 			},
-			"multiplicity": "*-1"
+			"multiplicity": "1-1"
 		},
         "input4": {
 			"source": {
@@ -35,7 +35,7 @@
 			"destination": {
 				"$ref": "schemas/test/e.schema.json#/properties/aid"
 			},
-			"multiplicity": "*-1"
+			"multiplicity": "1-1"
 		},
         "input5": {
 			"source": {
@@ -44,7 +44,7 @@
 			"destination": {
 				"$ref": "schemas/test/f.schema.json#/properties/bid"
 			},
-			"multiplicity": "*-1"
+			"multiplicity": "1-1"
 		},
         "input6": {
 			"source": {
@@ -53,7 +53,7 @@
 			"destination": {
 				"$ref": "schemas/test/g.schema.json#/properties/field1"
 			},
-			"multiplicity": "*-1"
+			"multiplicity": "0-*"
 		},
         "input7": {
 			"source": {
@@ -62,7 +62,7 @@
 			"destination": {
 				"$ref": "schemas/test/g.schema.json#/properties/field2"
 			},
-			"multiplicity": "*-1"
+			"multiplicity": "0-*"
 		},
         "input8": {
 			"source": {
@@ -71,7 +71,7 @@
 			"destination": {
 				"$ref": "schemas/test/g.schema.json#/properties/field3"
 			},
-			"multiplicity": "*-1"
+			"multiplicity": "0-*"
 		},
 		"input9": {
 			"source": {
@@ -80,7 +80,7 @@
 			"destination": {
 				"$ref": "schemas/test/h.schema.json#/properties/name"
 			},
-			"multiplicity": "*-1"
+			"multiplicity": "0-*"
 		},
 		"input10": {
 			"source": {
@@ -89,7 +89,7 @@
 			"destination": {
 				"$ref": "schemas/test/h.schema.json#/properties/telephone/properties/number"
 			},
-			"multiplicity": "*-1"
+			"multiplicity": "0-*"
 		}
 	}
 }

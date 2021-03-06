@@ -376,7 +376,8 @@ const refreshArrows = (svg, data, fields) => {
                     scrollWidth:
                         srcParent[0].offsetWidth - srcParent[0].clientWidth,
                     borderWidth: 5, // srcPanel[0].clientTop,
-                    animComplete: fields[s].animComplete
+                    animComplete: fields[s].animComplete,
+                    multiplicity: fields[s].multiplicity || ""
                 },
                 destination: {
                     el: fields[d].dom[0],
@@ -564,6 +565,7 @@ async function draw(data) {
         let d = data.map[m].destination['$ref']
         if (fields[s]) {
             fields[s]['mapped'] = true
+            fields[s]['multiplicity'] = data.map[m].multiplicity
         }
         if (fields[d]) {
             fields[d]['mapped'] = true

@@ -34,36 +34,26 @@ Svg.prototype.drawCircle = function (x, y, radius, color) {
     svg.appendChild(shape)
 }
 
-Svg.prototype.drawRecentangle = function (x, y, width, height, anim) {
+Svg.prototype.drawRecentangle = function (x, y, width, height, anim, multiplicity) {
     
-    // equivalent to: <g>
-    var group = document.createElementNS('http://www.w3.org/2000/svg', 'g')
-
-    // equivalent to: <rect x="0" y="0" width="10" height="10" fill="blue" />
+    // equivalent to: <rect x="0" y="0" width="10" height="10" />
     var shape = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
     shape.setAttributeNS(null, 'x', x)
     shape.setAttributeNS(null, 'y', y)
     shape.setAttributeNS(null, 'width', width)
     shape.setAttributeNS(null, 'height', height)
-    //shape.setAttributeNS(null, 'fill', 'none')
-    shape.setAttributeNS(null, 'stroke', 'none')
 
-    // equivalent to: <text x="0" y="50">Hello</text>
+    // equivalent to: <text x="0" y="50" class="anim">Hello</text>
     var label = document.createElementNS('http://www.w3.org/2000/svg', 'text')
-    label.setAttributeNS(null, 'x', x + 5)
+    label.setAttributeNS(null, 'x', x + 6)
     label.setAttributeNS(null, 'y', y + 10)
-    label.setAttributeNS(null, 'font-family', 'Verdana')
-    label.setAttributeNS(null, 'font-size', 8)
-    label.setAttributeNS(null, 'fill', 'white')
-    label.setAttributeNS(null, 'stroke', 'none')
     if(anim === true) {
         label.setAttributeNS(null, 'class', 'anim')
     }
-    // label.setAttributeNS(null, 'display', 'none')
-    //label.setAttributeNS(null, 'width', 30)
-    //label.setAttributeNS(null, 'height', 20)
-    label.append('0..*');
+    label.append(multiplicity);
 
+    // equivalent to: <g>
+    var group = document.createElementNS('http://www.w3.org/2000/svg', 'g')
     group.appendChild(shape);
     group.appendChild(label);
     
@@ -218,6 +208,7 @@ Svg.prototype.connectDivs = function (config) {
     let border = config.source.borderWidth
     let selected = config.selected
     let anim = config.source.animComplete
+    let label = config.source.multiplicity
     
     var circleRadius = 3 // circle radius
     var markerWidth = 20 // marker width
@@ -267,7 +258,7 @@ Svg.prototype.connectDivs = function (config) {
     let visualOffset = 3;
 
     /* Multi-point lines with rectangle endings */
-    let srcMarker = this.drawRecentangle(x1, y1 - (markerHeight/2) + visualOffset, markerWidth, markerHeight, anim)
+    let srcMarker = this.drawRecentangle(x1, y1 - (markerHeight/2) + visualOffset, markerWidth, markerHeight, anim, label)
     
     // co-ordinates are the tip of the arrow
     let destMarker = this.drawArrow(x2, y2 + visualOffset, color);
