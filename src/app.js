@@ -192,21 +192,52 @@ const scrollFieldIntoView = function(field) {
 }
 
 /** Field selection event handler */
-const onFieldSelect = (event, svg, data, fields) => {
-    // clear existing selections
-    state.selectedFields.forEach((f) => {
-        f.dom.removeClass('selected')
-        f.selected = false        
-        if(f.mapped == true) {
-            $(f.connector).removeClass('selected')
-            $(f.connector).removeClass('anim')
-            f.animComplete = false;
-        }
-    })
-    state.selectedFields = []
-
+const onFieldSelect = (event, data, fields) => {
+    
     // get the JSON Pointer path from DOM element
     let key = $(event.currentTarget).data('key')
+
+    let clearFields = (fs) => {
+        fs.forEach((f) => {
+            f.dom.removeClass('selected')
+            f.selected = false        
+            if(f.mapped == true) {
+                $(f.connector).removeClass('selected')
+                $(f.connector).removeClass('anim')
+                f.animComplete = false;
+            }
+            // remove de-selected field from state
+            // state.selectedFields.splice(state.selectedFields.indexOf(f), 1)
+        })
+    }
+
+    if(!event.shiftKey) {
+        // shift is not pressed
+
+        // clear all existing selections
+        clearFields(state.selectedFields)
+        state.selectedFields = []
+    }
+    else {
+        // shift is pressed
+        
+        // true if the clicked field is already selected
+        var selected = state.fields[key].selected;
+        if(selected) {
+            // already selected so deactive Field and ancestors and descendants
+            let fieldsToClear = [
+                state.fields[key], 
+                ...getAncestors(data, key).map(m => state.fields[m]), 
+                ...getDescendants(data, key).map(m => state.fields[m])
+            ]
+            clearFields(fieldsToClear);
+            // remove selections from state
+            fieldsToClear.forEach(f => {
+                state.selectedFields.splice(state.selectedFields.indexOf(f), 1)
+            });
+            return; // do not re-select fields
+        }
+    }
 
     // contains all the scroll promises
     var actions = []
@@ -460,15 +491,15 @@ async function draw(data) {
 
             // DOM element for Field
             let $el = $(
-                `<div class="field">
-                    <div class="field-label"><i class="icon icon-tag"></i>${fields[key]['label']}</div>
-                    <div class="field-datatype">${fields[key]['node'].type}</div>
-                    <div class="field-maxlength">(${fields[key]['node'].maxLength})</div>
+                `<div class="field" unselectable="on">
+                    <div class="field-label" unselectable="on"><i class="icon icon-tag"></i>${fields[key]['label']}</div>
+                    <div class="field-datatype" unselectable="on">${fields[key]['node'].type}</div>
+                    <div class="field-maxlength" unselectable="on">(${fields[key]['node'].maxLength})</div>
                 </div>`
             )
             // selection handler
             .on('click', (evt) =>
-                onFieldSelect(evt, svg, state.map, state.fields)
+                onFieldSelect(evt, state.map, state.fields)
             )
             // add JSON Pointer to the field data
             .data('key', key)
