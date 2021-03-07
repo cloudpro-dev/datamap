@@ -67,15 +67,17 @@ The following tasks are considered in scope for this POC:
 2. Multi-select for fields in panel with dependency highlighting
 3. Labellng improvments including labels on arrows using the name of the key from the map, and multiplicity shown on the arrow ends
 4. Schema view mode which shows the dependencies between the schemas but does not show the fields
-5. Meta data for fields that can store additional information e.g. UI field name, technical label, description, etc (use seperate `meta` element for data)
-6. Design a way of *defining* and *visualing* any transformation between a source and destination field
-7. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
-8. Manual ordering for the fields within a panel
-9. Custom layout mode for the schema Panels using DnD to position
-10. Resizable panels by dragging edges (vertically only)
-11. Auto-complete for the search field which allows you to quickly select just a single field
-12. Mini-map which allows dragging around the diagram
-13. Pre-defined zoom levels
+5. Add `height` attribute to schema files which allows manual adjustment of the Panel height
+6. Design concept of a `View` which can combine one or more `Map` files to create a combined diagram.  Need to consider how we define the edges of `View`
+6. Meta data for fields that can store additional information e.g. UI field name, technical label, description, etc (use seperate `meta` element for data)
+7. Design a way of *defining* and *visualing* any transformation between a source and destination field
+8. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
+9. Manual ordering for the fields within a panel using DnD (currently only available via `Map` file definition)
+10. Custom layout mode for the schema Panels using DnD to position
+11. Vertical resizable panels by dragging edges (currently only available via `height` attribute of schema)
+12. Auto-complete for the search field which allows you to quickly select just a single field
+13. Mini-map which allows dragging around the diagram
+14. Pre-defined zoom levels
 
 # Field Flow
 
