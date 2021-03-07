@@ -46,6 +46,15 @@
 			},
 			"multiplicity": "1-1"
 		},
+		"input5_1": {
+			"source": {
+				"$ref": "schemas/test/e.schema.json#/properties/aid"
+			},
+			"destination": {
+				"$ref": "schemas/test/g.schema.json#/properties/aid"
+			},
+			"multiplicity": "0-*"
+		},
         "input6": {
 			"source": {
 				"$ref": "schemas/test/e.schema.json#/properties/field7"
@@ -70,6 +79,15 @@
 			},
 			"destination": {
 				"$ref": "schemas/test/g.schema.json#/properties/field3"
+			},
+			"multiplicity": "0-*"
+		},
+		"input8_1": {
+			"source": {
+				"$ref": "schemas/test/g.schema.json#/properties/aid"
+			},
+			"destination": {
+				"$ref": "schemas/test/h.schema.json#/properties/aid"
 			},
 			"multiplicity": "0-*"
 		},
