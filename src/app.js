@@ -12,7 +12,11 @@ const state = {
     schemas: {},
     fields: [],
     query: null,
-    selectedFields: []
+    selectedFields: [],
+    view: {
+        showFields: true,
+        showUnmappedFields: true
+    }
 }
 
 // SVG layer
@@ -129,6 +133,8 @@ const onAutoComplete = (evt, fields, matched) => {
 
     // set matches for the field value
     let resp = getFilteredFields(fields, evt)
+
+    // TODO combine both loops below into one
 
     for (var i = 0; i < resp.length; i++) {
         matched.push(resp[i])
@@ -308,7 +314,7 @@ const onFieldSelect = (event, data, fields) => {
 }
 
 
-/** Layout the schema panels in Orthagonal format */
+/** Layout the schema panels in Orthagonal format with edge grouping */
 const layoutPanels = (g, nodes, schemas, svg) => {
     for (let [key, val] of nodes.entries()) {
         // console.log("node", key, val, schemas[key].dom);
@@ -344,18 +350,51 @@ const layoutPanels = (g, nodes, schemas, svg) => {
         schemas[v].dom.find('.panel-body').scroll(function (evt) {
             // only respond to vertical scroll events
             var currentLeft = $(this).scrollLeft()
+            // refresh arrows on vertical scroll only
             if (prevLeft != currentLeft) {
                 prevLeft = currentLeft
             } else {
-                // refresh arrows on vertical scroll only
-                refreshArrows(svg, state.map, state.fields)
+                // hiding fields triggers a scroll event
+                if(state.view.showFields === true) {
+                    // only draw arrows if we are showing fields
+                    drawFieldArrows(svg, state.map, state.fields)
+                }
             }
         })
     })
+
+    /*
+    g.edges().forEach(function(e) {
+        console.log("Edge " + e.v + " -> " + e.w + ": " + JSON.stringify(g.edge(e)));
+
+        let points = g.edge(e).points.map(e => {
+            return [e.x, e.y];
+        });
+
+        var polyline = svg.drawPolyline(g.edge(e).points);
+        console.log("polyline", polyline);
+
+        
+
+        // var polyline = draw.polyline(points).fill('none').stroke({ width: 1 })
+     });
+     */
+}
+
+const drawSchemaArrows = function(graph, schemas, svg) {
+    for(let [key, val] of graph) {
+        let source = val;
+        // console.log("source", val);
+        for(let i = 0; i<source.edges.length; i++) {
+            // console.log("edge", source.edges[i]);
+            // draw arrow between source and edge
+            svg.connectPanels(schemas[source.name].dom[0], schemas[source.edges[i].name].dom[0])
+        }
+    }
 }
 
 /** Redraw the SVG arrows */
-const refreshArrows = (svg, data, fields) => {
+const drawFieldArrows = (svg, data, fields) => {
     svg.emptyCanvas();
 
     for (let m in data.map) {
@@ -590,60 +629,131 @@ async function draw(data) {
     g.graph().marginx = 25
     g.graph().marginy = 50
 
-    layoutPanels(g, buildDependencyGraph(data), schemas, svg)
+    let dependencyGraph = buildDependencyGraph(data);
+
+    layoutPanels(g, dependencyGraph, schemas, svg)
 
     //
     // Step 4. Draw the arrows
     //
-    refreshArrows(svg, state.map, state.fields)
+    drawFieldArrows(svg, state.map, state.fields)
 
     //
     // Step 5. Setup event handlers
     //
 
+    let onFieldLayoutChange = e => {
+        // console.log("onFieldLayoutChange", state.view)
+        if(state.view.showFields === true) {
+            for (let f in state.fields) {
+                if (state.view.showUnmappedFields === true) {
+                    state.fields[f].dom.show()
+                } else {
+                    if (state.fields[f].mapped === false) {
+                        state.fields[f].dom.hide()
+                    }
+                    else {
+                        state.fields[f].dom.show()
+                    }
+                }
+            }
+        }
+        else {
+            // dont show any fields
+            for (let f in state.fields) {
+                state.fields[f].dom.hide()
+            }            
+        }
+
+        // layout panels after we remove the fields
+        layoutPanels(g, dependencyGraph, schemas, svg)
+
+        svg.emptyCanvas()
+
+        if(state.view.showFields === true) {
+            drawFieldArrows(svg, state.map, state.fields)
+        }
+        else {
+            drawSchemaArrows(dependencyGraph, schemas, svg);
+        }
+    }
+
     // auto-complete
     let timeoutId = 0
-    // TODO shall we lift up to state?
+    // TODO lift up to state
     let matched = []
-    let showMappedFields = false;
 
     $('#autocomplete').on('keydown', (evt) => {
         clearTimeout(timeoutId)
-        timeoutId = setTimeout(
-            onAutoComplete.bind(null, evt, fields, matched),
-            350
-        )
+        timeoutId = setTimeout(onAutoComplete.bind(null, evt, fields, matched), 350)
     })
 
-    // show mapped fields only handler
-    $('#showMappedFieldsOnlyCb').on('change', (e) => {
-        showMappedFields = $(e.currentTarget).is(':checked')
-        // console.log('showMappedFieldsOnlyCb', state['showMappedFieldsOnly']);
+    $('#showMappedFieldsOnlyCb').on('change', e => {
+        state.view.showUnmappedFields = !$(e.currentTarget).is(':checked')
+        onFieldLayoutChange(e)
+    })
 
-        for (let f in state.fields) {
-            if (showMappedFields === true) {
-                if (state.fields[f].mapped === false) {
-                    state.fields[f].dom.hide()
-                }
-            } else {
-                state.fields[f].dom.show()
-            }
-        }
-
-        // redraw the entire screen
-        layoutPanels(g, buildDependencyGraph(data), schemas, svg)
-        refreshArrows(svg, state.map, state.fields)
+    $('#showSchemasOnlyCb').on('change', e => {
+        state.view.showFields = !$(e.currentTarget).is(':checked')
+        onFieldLayoutChange(e)
     })
 
     $('#sortType').on('change', (e) => {
         // update all the panels
-        // TODO make this panel specific with a pop up
         for (let key in state.schemas) {
             state.schemas[key].sort = $(e.currentTarget).val()
             refreshFields(key)
-            refreshArrows(svg, state.map, state.fields)
+            // drawFieldArrows(svg, state.map, state.fields)
+            onFieldLayoutChange(e)
         }
     })
+
+    /*
+    // show mapped fields only handler
+    $('#showMappedFieldsOnlyCb').on('change', (e) => {
+        state.view.showUnmappedFields = !$(e.currentTarget).is(':checked')
+        // console.log('showMappedFieldsOnlyCb', state['showMappedFieldsOnly']);
+
+        for (let f in state.fields) {
+            if (state.view.showUnmappedFields === true) {
+                state.fields[f].dom.show()
+            } else {
+                if (state.fields[f].mapped === false) {
+                    state.fields[f].dom.hide()
+                }
+            }
+        }
+
+        // redraw the entire screen
+        layoutPanels(g, dependencyGraph, schemas, svg)
+        drawFieldArrows(svg, state.map, state.fields)
+    })
+
+    $('#showSchemasOnlyCb').on('change', (e) => {
+        state.view.showFields = !$(e.currentTarget).is(':checked')
+
+        for (let f in state.fields) {
+            if(state.view.showFields === true) {
+                state.fields[f].dom.show()
+            }
+            else {
+                state.fields[f].dom.hide()
+            }
+        }
+
+        layoutPanels(g, dependencyGraph, schemas, svg)
+        svg.emptyCanvas()
+
+        // TODO put in function so both checkbox handlers use same logic to determine which fields are shown in a panel !!
+        if(state.view.showFields === true) {
+            drawFieldArrows(svg, state.map, state.fields)
+        }
+        else {
+            drawSchemaArrows(graph, schemas, svg);
+        }
+
+    })
+    */
 
     // extend SVG canvas to match document DOM size
     $('#svg-canvas').attr('width', $(document).width())

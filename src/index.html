@@ -14,10 +14,19 @@
       <div class="form-element">
         <input type="checkbox" name="show-unmapped" id="showMappedFieldsOnlyCb" />
         <label for="showMappedFieldsOnlyCb">
-          Show mapped fields only
+          Hide unmapped fields
         </label>
       </div>
       <div class="form-element">
+        <input type="checkbox" name="show-schemas" id="showSchemasOnlyCb" />
+        <label for="showSchemasOnlyCb">
+          Hide all fields
+        </label>
+      </div>
+      <div class="form-element">
+        <label for="showSchemasOnlyCb">
+          Order fields by
+        </label>
         <select id="sortType">
           <option value="MAP">Map</option>
           <option value="ALPHANUMERIC">Label</option>
@@ -28,6 +37,11 @@
     </div>
     <div id="panels"></div>
     <svg id="svg-canvas" style="position:absolute;top:0px;left:0px" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" />
+        </marker>
+      </defs>
     </svg>
   </body>
 </html>

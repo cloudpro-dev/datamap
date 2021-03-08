@@ -105,6 +105,24 @@ Svg.prototype.drawStraightLine = function(x1, y1, x2, y2, color) {
     svg.appendChild(shape)
 }
 
+Svg.prototype.drawStraightArrow = function(x1, y1, x2, y2, color) {
+    var svg = this.canvas
+
+    var group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+
+
+    var shape = document.createElementNS('http://www.w3.org/2000/svg', 'line')
+    shape.setAttributeNS(null, 'x1', x1)
+    shape.setAttributeNS(null, 'y1', y1)
+    shape.setAttributeNS(null, 'x2', x2)
+    shape.setAttributeNS(null, 'y2', y2)
+    shape.setAttributeNS(null, 'stroke', color)
+    //shape.setAttributeNS(null, 'marker-end', 'url(#arrowhead)')
+    group.append(shape);
+
+    svg.appendChild(group)
+}
+
 Svg.prototype.drawPolyline = function(points, color) {
     var svg = this.canvas
     var shape = document.createElementNS('http://www.w3.org/2000/svg', 'polyline')
@@ -276,4 +294,34 @@ Svg.prototype.connectDivs = function (config) {
     return this.drawGraphic(srcMarker, connector, destMarker, selected, anim);
 }
 
+Svg.prototype.connectPanels = function (left, right) {
+    var svg = this.canvas
+
+    let markerWidth = 10;
+    let markerHeight = 7;
+
+    // source
+    var leftPos = this.findAbsolutePosition(left)
+    var x1 = leftPos.x += left.offsetWidth
+    var y1 = leftPos.y
+    y1 += left.offsetHeight / 2
+
+    // console.log("left", leftPos, x1, y1);
+
+    // destination
+    var rightPos = this.findAbsolutePosition(right)
+    var x2 = rightPos.x
+    var y2 = rightPos.y
+    y2 += right.offsetHeight / 2
+
+    var width = x2 - x1
+    var height = y2 - y1
+
+    // console.log("right", x2, y2);
+
+    let shape = this.drawStraightArrow(x1, y1, x2, y2, "#CCC");
+    svg.append(shape);
+}
+
 export default Svg
+
