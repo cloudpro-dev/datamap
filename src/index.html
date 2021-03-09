@@ -7,34 +7,39 @@
     <script src="./app.js"></script>
   </head>
   <body>
-    <div id="toolbar" class="toolbar">
-      <div class="form-element">
-        <input type="text" name="q" id="autocomplete" />
+    <header class="fixed-header">
+      <div id="toolbar" class="toolbar">
+        <div class="form-element">
+          <label for="autocomplete" class="toolbar-label">
+            Search fields
+          </label>
+          <input type="text" name="q" id="autocomplete" />
+        </div>
+        <div class="form-element">
+          <input type="checkbox" name="show-unmapped" id="showMappedFieldsOnlyCb" />
+          <label for="showMappedFieldsOnlyCb">
+            Hide unmapped fields
+          </label>
+        </div>
+        <div class="form-element">
+          <input type="checkbox" name="show-schemas" id="showSchemasOnlyCb" />
+          <label for="showSchemasOnlyCb">
+            Hide all fields
+          </label>
+        </div>
+        <div class="form-element orderby">
+          <label for="sortType" class="toolbar-label">
+            Order fields by
+          </label>
+          <select id="sortType">
+            <option value="MAP">Map</option>
+            <option value="ALPHANUMERIC">Label</option>
+            <option value="DATATYPE">Data type</option>
+            <option value="MANUAL">Manual (TODO)</option>
+          </select>
+        </div>
       </div>
-      <div class="form-element">
-        <input type="checkbox" name="show-unmapped" id="showMappedFieldsOnlyCb" />
-        <label for="showMappedFieldsOnlyCb">
-          Hide unmapped fields
-        </label>
-      </div>
-      <div class="form-element">
-        <input type="checkbox" name="show-schemas" id="showSchemasOnlyCb" />
-        <label for="showSchemasOnlyCb">
-          Hide all fields
-        </label>
-      </div>
-      <div class="form-element">
-        <label for="showSchemasOnlyCb">
-          Order fields by
-        </label>
-        <select id="sortType">
-          <option value="MAP">Map</option>
-          <option value="ALPHANUMERIC">Label</option>
-          <option value="DATATYPE">Data type</option>
-          <option value="MANUAL">Manual (TODO)</option>
-        </select>
-      </div>
-    </div>
+    </header>
     <div id="panels"></div>
     <svg id="svg-canvas" style="position:absolute;top:0px;left:0px" xmlns:xlink="http://www.w3.org/1999/xlink">
       <defs>

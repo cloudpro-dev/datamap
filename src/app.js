@@ -627,8 +627,8 @@ async function draw(data) {
     g.graph().rankdir = 'LR'
     g.graph().ranksep = 125
     g.graph().nodesep = 50
-    g.graph().marginx = 25
-    g.graph().marginy = 50
+    g.graph().marginx = 35
+    g.graph().marginy = 85
 
     let dependencyGraph = buildDependencyGraph(data);
 
