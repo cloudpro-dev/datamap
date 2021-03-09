@@ -218,7 +218,7 @@ const onFieldSelect = (event, data, fields) => {
     }
 
     // toggle selection of the Field on and off
-    if(!event.shiftKey) {
+    if(!event.ctrlKey) {
         // shift is not pressed (single select)
         
         // if the clicked field is already selected we do not want
