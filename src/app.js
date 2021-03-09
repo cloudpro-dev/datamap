@@ -11,6 +11,7 @@ const state = {
     paths: null,
     schemas: {},
     fields: [],
+    // TODO move inside "view"
     query: null,
     selectedFields: [],
     view: {

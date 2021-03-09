@@ -67,13 +67,15 @@ The following tasks are considered in scope for this POC:
 2. Multi-select for fields in panel with dependency highlighting
 3. Labellng improvments including labels on arrows using the name of the key from the map, and multiplicity shown on the arrow ends
 4. Schema view mode which shows the dependencies between the schemas but does not show the fields
-5. Add `height` attribute to schema files which allows manual adjustment of the Panel height
-6. Load mask for initial display
-7. Use flexbox for toolbar layout
+
+5. Use flexbox for toolbar layout
+6. Add `height` attribute to schema files which allows manual adjustment of the Panel height
+7. Load mask for initial display
 8. Design concept of a `View` which can combine one or more `Map` files to create a combined diagram.  Need to consider how we define the edges of `View`
 9. Meta data for fields that can store additional information e.g. UI field name, technical label, description, etc (use seperate `meta` element for data)
 10. Design a way of *defining* and *visualing* any transformation between a source and destination field
 11. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
+
 12. Manual ordering for the fields within a panel using DnD (currently only available via `Map` file definition)
 13. Custom layout mode for the schema Panels using DnD to position
 14. Vertical resizable panels by dragging edges (currently only available via `height` attribute of schema)
@@ -81,6 +83,12 @@ The following tasks are considered in scope for this POC:
 16. Mini-map which allows dragging around the diagram
 17. Pre-defined zoom levels
 18. Pop-up menu on Panel to show information, allow actions, etc
+
+# Defects
+
+**When we order the fields (or anytime we show/hide fields) we start to see a delay when using the scroll bar**
+This is indicative of a memory leak, probably caused by the refresh of SVG arrows or too many listeners on the DOM elements that are not getting cleaned up as the fields are getting hidden.
+_Investigation required_
 
 # Field Flow
 
