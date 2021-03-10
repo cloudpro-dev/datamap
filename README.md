@@ -10,15 +10,31 @@ In even the most simple of integrated solutions you will find that data is conti
 A diagram contains many schemas and has an orthagonal layout with edge grouping.
 
 ### Schemas
-A JSON Schema which represents part of a data model in one of the systems you are trying to map.
+A [JSON Schema](https://json-schema.org/) which represents part of a data model in one of the systems you are trying to map.
 
-The JSON schema can represent either flat or hierarchical data.
+The schema can represent either flat or hierarchical data.
 
 ### Fields
 Each schema contains a number of `Field` definitions.  The minimum information that can be defined for a `Field` is `name` and `type`.
 
 ### Maps
 A JSON document which uses JSON Pointers to map fields between the different schemas.
+
+### Views
+A JSON document which defines which `Schema` to display.
+
+![View Conceptual Design](images/view-concept.png)
+
+At present we will define the `View` using a JSON document but in the future expect to allow the user to visually select the Schema for inclusion in a `View` and to provide some kind of label for the `View`.  Future improvements would be to allow selection of Schema for the View by either/or/and:
+- clicking the panel
+- selecting from a multi-select list component e.g. list of checkboxes
+- using a draggable area to capture fields to include
+
+The user can have as many views as they like (selectable?).
+
+Using a `View` you are able to display isolated sections of the overall `Map`.
+
+Using a `View` you can define a default panel height and also the height of each panel individually.
 
 ## Ingestion
 FieldView uses JSON schemas to represents each data source.
@@ -67,14 +83,16 @@ The following tasks are considered in scope for this POC:
 2. Multi-select for fields in panel with dependency highlighting
 3. Labellng improvments including labels on arrows using the name of the key from the map, and multiplicity shown on the arrow ends
 4. Schema view mode which shows the dependencies between the schemas but does not show the fields
-
 5. Use flexbox for toolbar layout
-6. Add `height` attribute to schema files which allows manual adjustment of the Panel height
-7. Load mask for initial display
-8. Design concept of a `View` which can combine one or more `Map` files to create a combined diagram.  Need to consider how we define the edges of `View`
-9. Meta data for fields that can store additional information e.g. UI field name, technical label, description, etc (use seperate `meta` element for data)
-10. Design a way of *defining* and *visualing* any transformation between a source and destination field
-11. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
+
+6. Design concept of a `View` which defines a list of schemas to load, instead of just scraping the Map for all fields
+7. Add `height` attribute to View definition files which allows manual adjustment of the Panel height
+8. Meta data for fields defined in a Schema that can store additional information e.g. UI field name, technical label, description, etc (use seperate `meta` element for data)
+9. Design a way of *defining* and *visualing* any transformation between a source and destination field
+10. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
+11. Load mask for initial display
+
+12. Multipicity labels on the schema view between entities, either end of the connector
 
 12. Manual ordering for the fields within a panel using DnD (currently only available via `Map` file definition)
 13. Custom layout mode for the schema Panels using DnD to position

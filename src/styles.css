@@ -46,9 +46,7 @@
     background-color: #eee;
 }
 .panel-body {
-    max-height:200px;
     overflow-y: scroll;
-    z-index: 10;
     position:relative;
 }
 

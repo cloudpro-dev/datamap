@@ -1,0 +1,23 @@
+{
+    "name": "test-view",
+    "maxPanelHeight": 250,
+    "schemas": [
+        {
+            "$ref": "schemas/test/c.schema.json",
+            "panelHeight": 300
+        },
+        {
+            "$ref": "schemas/test/d.schema.json"
+        },
+        {
+            "$ref": "schemas/test/e.schema.json"
+        },
+        {
+            "$ref": "schemas/test/f.schema.json",
+            "panelHeight": 500
+        },
+        {
+            "$ref": "schemas/test/g.schema.json"
+        }
+    ]
+}

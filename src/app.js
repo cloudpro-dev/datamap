@@ -24,14 +24,19 @@ const state = {
 const svg = null
 
 /** Build a dependency Graph */
-function buildDependencyGraph(data) {
+function buildDependencyGraph(data, view) {
     let nodes = new Map()
     for (let id in data.map) {
         let sourceRef = data.map[id]['source']['$ref']
         let destRef = data.map[id]['destination']['$ref']
         let source = sourceRef.substring(0, sourceRef.indexOf('#'))
         let destination = destRef.substring(0, destRef.indexOf('#'))
-
+        
+        // dont build dependencies for schemas that are not present in View
+        if(!viewContainsSchema(view, source) || !viewContainsSchema(view, destination)) {
+            continue;
+        }
+        // create a new graph node if necessary
         if (!nodes.has(source)) {
             nodes.set(source, new Graph.Node(source))
         }
@@ -276,6 +281,10 @@ const onFieldSelect = (event, data, fields) => {
     
     // select a Field in the panel
     let selectField = (id) => {
+        if(!fields[id]) {
+            // we may not have drawn the field
+            return;
+        }
         fields[id].selected = true
         fields[id].dom.addClass('selected')
         state.selectedFields.push(fields[id])
@@ -314,15 +323,74 @@ const onFieldSelect = (event, data, fields) => {
     Promise.all(actions).then(fields => fields.forEach(f => animateMarker(f)))
 }
 
+/* Returns true if the current view contains the specified schema **/
+const viewContainsSchema = function(view, path) {
+    let found = false;
+    for(let i = 0; i<view.schemas.length; i++) {
+        if(view.schemas[i]['$ref'] === path) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/* Returns the configuration for the schema or null if not found **/
+const getSchemaView = function(view, path) {
+    for(let i = 0; i<view.schemas.length; i++) {
+        if(view.schemas[i]['$ref'] === path) {
+            return view.schemas[i];
+        }
+    }
+    return null;
+}
 
 /** Layout the schema panels in Orthagonal format with edge grouping */
-const layoutPanels = (g, nodes, schemas, svg) => {
+const layoutPanels = (g, nodes, schemas, svg, view) => {
+    // TODO calculate height in the following order:
+    // 1. custom height for schema in view
+    // 2. default height settings for view ('auto')
+    // 3. default height for content to max of 200px
+    let calcHeight = key => {
+        if(state.view.showFields === false) {
+            // height of just the header
+            return $(state.schemas[key].dom.find('.panel-header')).outerHeight();
+        }
+        else {
+            // ensure we clear the panel height so it can be recalculated based on content
+            state.schemas[key].dom.css('height', '')
+            state.schemas[key].dom.find('.panel-body').css('height', '')
+        }
+
+        // otherwise, fields are being shown
+        // start with the height of the current panel
+        // N.B: when fields are not being shown, this value is equivalent to just the header height
+        let height = schemas[key].dom.height();
+        // console.log("calcHeight", height);
+        if(height > view.maxPanelHeight) {
+            height = view.maxPanelHeight;
+        }
+        
+        // check for custom height in view
+        let config = getSchemaView(view, key);
+        if(config.panelHeight) {
+            // height is defined for schema in view, use this value
+            height = config.panelHeight;
+        }
+        return height;
+    }
+
+    // TODO We need to set the .panel-body height and remove max-height from CSS
+    // so that we can override from here
+    
     for (let [key, val] of nodes.entries()) {
         // console.log("node", key, val, schemas[key].dom);
+
+        // console.log("node.entries",  key, val, calcHeight(key))
+
         g.setNode(key, {
             label: val.name,
             width: schemas[key].dom.width(),
-            height: schemas[key].dom.height(),
+            height: calcHeight(key),
         })
         for (const e in val.edges) {
             // console.log("edge", key, val.edges[e].name);
@@ -330,24 +398,28 @@ const layoutPanels = (g, nodes, schemas, svg) => {
         }
     }
 
-    // layout
+    // calculate layout
     layout(g)
 
     // update the DOM elements based on layout data
-
+    // results from the calculation, nodes now contain co-ordinates
     g.nodes().forEach(function (v) {
-        // console.log("Node " + v + ": " + JSON.stringify(g.node(v)), g.node(v));
+        //console.log("Node " + v + ": " + JSON.stringify(g.node(v)), g.node(v));
 
+        let h = calcHeight(v);
         let n = g.node(v)
-        // console.log("el", schemas[v], n);
         schemas[v].dom.css({
             width: n.width,
-            /*height: n.height,*/
+            // height: n.height,
             left: n.x - n.width / 2,
             top: n.y - n.height / 2,
         })
+
+        // set scrollable panel height 
+        // panel height minus header equals body height
+        schemas[v].dom.find('.panel-body').css('height', h - schemas[v].dom.find('.panel-header').outerHeight());
+
         var prevLeft = 0;
-        
         schemas[v].dom.find('.panel-body').scroll(function (evt) {
             // only respond to vertical scroll events
             var currentLeft = $(this).scrollLeft()
@@ -494,6 +566,20 @@ async function draw(data) {
     const svg = new Svg()
 
     //
+    // Step 0. Load the defined view and use it to filter schemas from map
+    //
+
+    // TODO use config to define the name of the view
+    let viewpath = "views/test.view.json";
+
+    // fetch the schema file
+    let response = await fetch(viewpath)
+
+    // get the JSON
+    let view = await response.json()
+    console.log("view", view);
+
+    //
     // Step 1. Load list of paths for defined properties
     //
 
@@ -504,8 +590,11 @@ async function draw(data) {
         paths.add(s.substring(0, s.indexOf('#')))
         paths.add(d.substring(0, d.indexOf('#')))
     }
-    state.paths = paths
-    // console.log('paths', paths)
+
+    // only include a schema path if it is included in the View
+    let filtered = [...paths].filter(p => viewContainsSchema(view, p));
+    state.paths = [...filtered];
+    //console.log('paths', state.paths)
 
     //
     // Step 2. Draw schema at each of the paths
@@ -517,9 +606,8 @@ async function draw(data) {
     const schemas = {}
     // parser for dereferencing
     const parser = new $RefParser()
-
-    // const $selectedFields = [];
-    for (let path of paths) {
+    
+    for (let path of state.paths) {
         // fetch the schema file
         let response = await fetch(path)
 
@@ -603,6 +691,10 @@ async function draw(data) {
     for (let m in data.map) {
         let s = data.map[m].source['$ref']
         let d = data.map[m].destination['$ref']
+        if(!viewContainsSchema(view, s.substring(0, s.indexOf('#'))) || 
+            !viewContainsSchema(view, d.substring(0, d.indexOf('#')))) {
+            continue;
+        }
         if (fields[s]) {
             fields[s]['mapped'] = true
             fields[s]['multiplicity'] = data.map[m].multiplicity
@@ -616,7 +708,7 @@ async function draw(data) {
     // console.log('fields', fields)
 
     //
-    // Step 3. Layout the Schema Panels
+    // Step 4. Layout the Schema Panels
     //
 
     const g = new dagre.graphlib.Graph()
@@ -630,9 +722,10 @@ async function draw(data) {
     g.graph().marginx = 35
     g.graph().marginy = 85
 
-    let dependencyGraph = buildDependencyGraph(data);
+    // TODO exclude any mapping where the source or destination mapping schema is not in the view
+    let dependencyGraph = buildDependencyGraph(data, view);
 
-    layoutPanels(g, dependencyGraph, schemas, svg)
+    layoutPanels(g, dependencyGraph, schemas, svg, view)
 
     //
     // Step 4. Draw the arrows
@@ -665,9 +758,9 @@ async function draw(data) {
                 state.fields[f].dom.hide()
             }            
         }
-
+        
         // layout panels after we remove the fields
-        layoutPanels(g, dependencyGraph, schemas, svg)
+        layoutPanels(g, dependencyGraph, schemas, svg, view)
 
         svg.emptyCanvas()
 
