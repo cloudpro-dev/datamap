@@ -3,6 +3,12 @@
     "maxPanelHeight": 250,
     "schemas": [
         {
+            "$ref": "schemas/test/a.schema.json"
+        },
+        {
+            "$ref": "schemas/test/b.schema.json"
+        },
+        {
             "$ref": "schemas/test/c.schema.json",
             "panelHeight": 300
         },
@@ -18,6 +24,9 @@
         },
         {
             "$ref": "schemas/test/g.schema.json"
+        },
+        {
+            "$ref": "schemas/test/h.schema.json"
         }
     ]
 }

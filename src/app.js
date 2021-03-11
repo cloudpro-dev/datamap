@@ -562,20 +562,17 @@ const refreshFields = (id) => {
 }
 
 /** Draw and layout the page including the SVG arrows */
-async function draw(data) {
+async function draw(mapPath, viewPath) {
     const svg = new Svg()
 
-    //
-    // Step 0. Load the defined view and use it to filter schemas from map
-    //
+    // fetch the map
+    let response = await fetch(mapPath)
+    state.map = await response.json()
+    let data = state.map;
+    console.log("map", data);
 
-    // TODO use config to define the name of the view
-    let viewpath = "views/test.view.json";
-
-    // fetch the schema file
-    let response = await fetch(viewpath)
-
-    // get the JSON
+    // fetch the view file
+    response = await fetch(viewPath)
     let view = await response.json()
     console.log("view", view);
 
@@ -856,15 +853,11 @@ async function draw(data) {
 
 /** Runs the app when the DOM is fully loaded */
 $(function () {
-    async function loadMap(filename) {
-        // load the map
-        let response = await fetch(filename)
-        state.map = await response.json()
-
-        // draw the map
-        await draw(state.map)
+    async function loadMap(map, view) {
+        // draw the map using a view
+        await draw(map, view)
         console.log('state', state)
     }
 
-    loadMap('maps/test.map.json')
+    loadMap('maps/test.map.json', 'views/test.view.json')
 })
