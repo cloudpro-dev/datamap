@@ -94,13 +94,14 @@ The following tasks are considered in scope for this POC:
 
 12. Multipicity labels on the schema view between entities, either end of the connector
 
-12. Manual ordering for the fields within a panel using DnD (currently only available via `Map` file definition)
-13. Custom layout mode for the schema Panels using DnD to position
-14. Vertical resizable panels by dragging edges (currently only available via `height` attribute of schema)
-15. Auto-complete for the search field which allows you to quickly select just a single field
-16. Mini-map which allows dragging around the diagram
-17. Pre-defined zoom levels
-18. Pop-up menu on Panel to show information, allow actions, etc
+13. Auto-complete for the search field which allows you to quickly select just a single field
+14. Pop-up menu on Panel to show information, allow actions, etc
+15. Mini-map which allows dragging around the diagram
+16. Manual ordering for the fields within a panel using DnD (currently only available via `Map` file definition)
+17. Custom layout mode for the schema Panels using DnD to position
+18. Vertical resizable panels by dragging edges (currently only available via `height` attribute of schema)
+19. Pre-defined zoom levels
+20. Show hierarchical fields as a tree so that you can fold whole sections up/down, including necessary arrow changes
 
 # Defects
 

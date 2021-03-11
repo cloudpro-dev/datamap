@@ -650,12 +650,12 @@ async function draw(mapPath, viewPath) {
 
             // DOM element for Field
             let $el = $(
-                `<div class="field" unselectable="on">
-                    <div class="field-label" unselectable="on">
+                `<div class="field">
+                    <div class="field-label">
                         <i class="icon icon-tag"></i>${fields[key]['label']}${fields[key]['node'].minLength > 0 ? ' <em class="mandatory">(*)</em>' : ''}
                     </div>
-                    <div class="field-datatype" unselectable="on">${fields[key]['node'].type}</div>
-                    <div class="field-maxlength" unselectable="on">(${fields[key]['node'].maxLength})</div>
+                    <div class="field-datatype">${fields[key]['node'].type}</div>
+                    <div class="field-maxlength">(${fields[key]['node'].maxLength})</div>
                 </div>`
             )
             // selection handler
@@ -799,53 +799,42 @@ async function draw(mapPath, viewPath) {
         }
     })
 
-    /*
-    // show mapped fields only handler
-    $('#showMappedFieldsOnlyCb').on('change', (e) => {
-        state.view.showUnmappedFields = !$(e.currentTarget).is(':checked')
-        // console.log('showMappedFieldsOnlyCb', state['showMappedFieldsOnly']);
-
-        for (let f in state.fields) {
-            if (state.view.showUnmappedFields === true) {
-                state.fields[f].dom.show()
-            } else {
-                if (state.fields[f].mapped === false) {
-                    state.fields[f].dom.hide()
-                }
-            }
+    // simple tooltip implementation
+    let timer;
+    let delay = 1500;
+    let mouseX, mouseY = 0;
+    // mouse enters Field area
+    $('.field').on({
+        mouseenter: function(e){
+            timer = setTimeout(function() {
+                // show tooltip
+                let key = $(e.currentTarget).data('key');
+                let desc = fields[key].node.description;
+                if(!desc) return;
+                $(e.currentTarget).data('tiptext', desc)// .removeAttr('title');
+                // use current mouse position
+                $('<p class="tooltip"></p>')
+                    .text(desc)
+                    .appendTo('body')
+                    .css('top', (mouseY - 10) + 'px')
+                    .css('left', (mouseX + 20) + 'px')
+                    .fadeIn('fast');
+            }, delay);
+        },
+        mouseleave: function(e){
+            // on mouse out, cancel the timer
+            clearTimeout(timer);
+            // $(e.currentTarget).attr('title', $(e.currentTarget).data('tiptext'));
+            $('.tooltip').remove();
+        },
+        mousemove: function(e){
+            // track mouse position for when Field finally appears after setTimeout
+            mouseX = e.pageX;
+            mouseY = e.pageY;
+            $('.tooltip').css('top', (mouseY - 10) + 'px').css('left', (mouseX + 20) + 'px');
         }
-
-        // redraw the entire screen
-        layoutPanels(g, dependencyGraph, schemas, svg)
-        drawFieldArrows(svg, state.map, state.fields)
     })
-
-    $('#showSchemasOnlyCb').on('change', (e) => {
-        state.view.showFields = !$(e.currentTarget).is(':checked')
-
-        for (let f in state.fields) {
-            if(state.view.showFields === true) {
-                state.fields[f].dom.show()
-            }
-            else {
-                state.fields[f].dom.hide()
-            }
-        }
-
-        layoutPanels(g, dependencyGraph, schemas, svg)
-        svg.emptyCanvas()
-
-        // TODO put in function so both checkbox handlers use same logic to determine which fields are shown in a panel !!
-        if(state.view.showFields === true) {
-            drawFieldArrows(svg, state.map, state.fields)
-        }
-        else {
-            drawSchemaArrows(graph, schemas, svg);
-        }
-
-    })
-    */
-
+    
     // extend SVG canvas to match document DOM size
     $('#svg-canvas').attr('width', $(document).width())
     $('#svg-canvas').attr('height', $(document).height())
