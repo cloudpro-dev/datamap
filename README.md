@@ -9,18 +9,39 @@ In even the most simple of integrated solutions you will find that data is conti
 ### Diagram
 A diagram contains many schemas and has an orthagonal layout with edge grouping.
 
-### Schemas
+### Schema
 A [JSON Schema](https://json-schema.org/) which represents part of a data model in one of the systems you are trying to map.
 
 The schema can represent either flat or hierarchical data.
 
-### Fields
+### Field
 Each schema contains a number of `Field` definitions.  The minimum information that can be defined for a `Field` is `name` and `type`.
 
-### Maps
+#### Meta Data
+Each field can contain optional meta-data to further enrich the information of the field.  Define meta-data in the `meta` section of a JSON schema using key/value pairs. For example:
+```
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "The name of the object",
+            "minLength": 3,
+            "maxLength": 255,
+            "meta": {
+                "UI Field Label": "Name",
+                "Help text": "The human readable identifier for this object"
+            }
+        }
+    }
+}
+```
+
+### Map
 A JSON document which uses JSON Pointers to map fields between the different schemas.
 
-### Views
+### View
 A JSON document which defines which `Schema` to display.
 
 ![View Conceptual Design](images/view-concept.png)
@@ -79,41 +100,77 @@ Ordered list of `transformations` which is defined in the map against a `source`
 
 The following tasks are considered in scope for this POC:
 
-1. Line rendering improvements including flattened arrow ends as per the original ![Concept Design](images/introduction2.jpg)
-2. Multi-select for fields in panel with dependency highlighting
-3. Labellng improvments including labels on arrows using the name of the key from the map, and multiplicity shown on the arrow ends
-4. Schema view mode which shows the dependencies between the schemas but does not show the fields
-5. Use flexbox for toolbar layout
+1. Allow JSON `root` to be defined in a `Schema` definition file.  This useful for discarding ancestors from the display path
 
-6. Design concept of a `View` which defines a list of schemas to load, instead of just scraping the Map for all fields
-7. Add `height` attribute to View definition files which allows manual adjustment of the Panel height
-8. Meta data for fields defined in a Schema that can store additional information e.g. UI field name, technical label, description, etc (use seperate `meta` element for data)
-9. Design a way of *defining* and *visualing* any transformation between a source and destination field
-10. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
-11. Load mask for initial display
+    Suppose we have the follow piece of JSON data:
+    ```
+    {
+        "data": {
+            "result": {
+                "field1": "val1"
+            }
+        }
+    }
+    ```
+    Using the this Schema to describe the data:
+    ```
+    {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "root": "/properties/data/properties/result",
+        "properties": {
+            "data": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "object",
+                        "properties": {
+                            "field1": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ```
+    The label displayed in the Field would be `field1` instead of `data/result/field1`.
 
-12. Multipicity labels on the schema view between entities, either end of the connector
-
-13. Auto-complete for the search field which allows you to quickly select just a single field
-14. Pop-up menu on Panel to show information, allow actions, etc
-15. Mini-map which allows dragging around the diagram
-16. Manual ordering for the fields within a panel using DnD (currently only available via `Map` file definition)
-17. Custom layout mode for the schema Panels using DnD to position
-18. Vertical resizable panels by dragging edges (currently only available via `height` attribute of schema)
-19. Pre-defined zoom levels
-20. Show hierarchical fields as a tree so that you can fold whole sections up/down, including necessary arrow changes
+2. Given a `Schema` file, generate a fake JSON payload using [json-schema-faker](https://www.npmjs.com/package/json-schema-faker)
+3. Load mask for initial display
+4. Multipicity labels on the schema view between entities, either end of the connector.  Where would we define?
+5. Design a way of *defining* and *visualing* any transformation between a source and destination field
+6. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
+7. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
 
 # Defects
 
-**When we order the fields (or anytime we show/hide fields) we start to see a delay when using the scroll bar**
-This is indicative of a memory leak, probably caused by the refresh of SVG arrows or too many listeners on the DOM elements that are not getting cleaned up as the fields are getting hidden.
-_Investigation required_
+1. **When we order the fields (or anytime we show/hide fields) we start to see a delay when using the scroll bar**
 
-# Field Flow
+    This is indicative of a memory leak, probably caused by the refresh of SVG arrows or too many listeners on the DOM elements that are not getting cleaned up as the fields are getting hidden.
+    _Investigation required_
+
+# Future improvements
+
+The following ideas should be considered as future enhancments:
+
+1. Validate all `Schema`, `Map` and `View` files on load, using a JSON schema
+2. Advanced search which allows you to search for more than one criteria and also add meta-data fields to the search on-demand
+3. Auto-complete for the search field which allows you to quickly select just a single field
+4. Pop-up menu on Panel to show information, allow actions, etc
+5. Mini-map which allows dragging around the diagram
+6. Manual ordering for the fields within a panel using DnD (currently only available via `Map` file definition)
+7. Custom layout mode for the schema Panels using DnD to position
+8. Vertical resizable panels by dragging edges (currently only available via `height` attribute of schema)
+9. Pre-defined zoom levels
+10. Show hierarchical fields as a tree so that you can fold whole sections up/down, including necessary arrow changes
+
+## Field Flow
 
 The ability to simulate data going through the model.  Pass some data into the model at some point and get a value out from another point with all the transformation applied.
 
-# Field Rules
+## Field Rules
 
 Rules engine which maps rules to fields in the schemas.
 Rules are defined in a seperate set of files to the schemas.

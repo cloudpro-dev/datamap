@@ -1,3 +1,5 @@
+/* Fixed header */
+
 .fixed-header, .fixed-footer{
     width: 100%;
     position: fixed;        
@@ -14,6 +16,8 @@
     bottom: 0;
     left:0;
 }
+
+/* Toolbar */
 
 .toolbar {
     position: relative;
@@ -32,6 +36,7 @@
     padding-top: 2px;
 }
 
+/* Panel */
 
 .panel {
     border: 3px solid #ccc;
@@ -50,9 +55,7 @@
     position:relative;
 }
 
-.clear {
-    clear:both;
-}
+/* Tooltip */
 
 .tooltip {
     display: none; 
@@ -65,6 +68,8 @@
     border-radius: 3px;
     z-index: 1000;
 }
+
+/* Field */
 
 .field {
     border: 1px solid #ccc;
@@ -91,7 +96,6 @@
     text-align: right;
     width: 50px;
 }
-
 .icon:before {
     content: "";
     display: block;
@@ -101,13 +105,14 @@
     float: left;
     margin: 3px 6px 0 0;
 }
-
-.selected {
+.field.selected {
     background-color: yellow;
 }
-.matched {
+.field.matched {
     background-color: greenyellow;
 }
+
+/* SVG elements */
 
 #svg-canvas {
     z-index: 0;
@@ -115,13 +120,9 @@
     top:50px;
     left:0px
 }
-
 .selected-line {
     stroke: #94d31b; 
 }
-
-/* SVG elements */
-
 .svg-connector {
     stroke: #94d31b; 
     fill: #94d31b;
@@ -147,4 +148,37 @@
 }
 .svg-connector g text.anim {
     display: block;
+}
+
+/* Meta data */
+
+.meta {
+    color: #777;
+}
+.meta .meta-label {
+    font-weight:bold;
+}
+.meta .meta-desc {
+    margin-bottom: 10px;
+}
+.meta .meta-info {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start; 
+}
+.meta .meta-info .meta-field {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch; 
+}
+.meta .meta-info .meta-field .meta-key {
+    width: 100px;
+    border-bottom: 1px solid #ccc;
+    padding-right: 10px;
+}
+.meta .meta-info .meta-field .meta-val {
+    flex-grow: 1;
+    border-bottom: 1px solid #ccc;
+    text-align:left;
+    max-width: 300px;
 }

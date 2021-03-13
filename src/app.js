@@ -608,7 +608,7 @@ async function draw(mapPath, viewPath) {
         // fetch the schema file
         let response = await fetch(path)
 
-        // get the JSON
+        // get the schema JSON
         let json = await response.json()
 
         // load any dereference documents to get full JSON
@@ -808,13 +808,50 @@ async function draw(mapPath, viewPath) {
         mouseenter: function(e){
             timer = setTimeout(function() {
                 // show tooltip
+
+                // elements to render to the tooltip
+                let els = [];
+
+                // get the field key
                 let key = $(e.currentTarget).data('key');
-                let desc = fields[key].node.description;
-                if(!desc) return;
-                $(e.currentTarget).data('tiptext', desc)// .removeAttr('title');
+
+                // add the field label
+                els.push($('<div class="meta-label"></div>').text(fields[key].label))
+
+                // default to the JSON schema description
+                if(fields[key].node.description) {
+                    els.push($('<div class="meta-desc"></div>').text(fields[key].node.description))
+                }
+
+                // build key/value for JSON schema properties
+                let schemaFields = [];
+                let schemaWrapper;
+                ['type', 'minLength', 'maxLength'].forEach(k => {
+                    let metas = [];
+                    metas.push($('<span class="meta-key" />').text(k));
+                    metas.push($('<span class="meta-val" />').text(fields[key].node[k]));
+                    schemaFields.push($('<div class="meta-field" />').append(metas));
+                });
+                schemaWrapper = $('<div class="meta-info"></div>').append(schemaFields);
+                
+                // build key/value pair DOM elements
+                let metaWrapper;
+                if(fields[key].node.meta) {
+                    let metaFields = [];
+                    for(let m in fields[key].node.meta) {
+                        let metas = [];
+                        metas.push($('<span class="meta-key" />').text(m));
+                        metas.push($('<span class="meta-val" />').text(fields[key].node.meta[m]));
+                        metaFields.push($('<div class="meta-field" />').append(metas));
+                    }
+                    metaWrapper = $('<div class="meta-info"></div>').append(metaFields);
+                }
+                
+                let el = $('<div class="meta"></div>').append(els).append(schemaWrapper).append(metaWrapper);
+                
                 // use current mouse position
                 $('<p class="tooltip"></p>')
-                    .text(desc)
+                    .append(el)
                     .appendTo('body')
                     .css('top', (mouseY - 10) + 'px')
                     .css('left', (mouseX + 20) + 'px')
@@ -824,7 +861,6 @@ async function draw(mapPath, viewPath) {
         mouseleave: function(e){
             // on mouse out, cancel the timer
             clearTimeout(timer);
-            // $(e.currentTarget).attr('title', $(e.currentTarget).data('tiptext'));
             $('.tooltip').remove();
         },
         mousemove: function(e){
