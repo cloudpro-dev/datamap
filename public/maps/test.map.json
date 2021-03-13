@@ -87,7 +87,7 @@
 				"$ref": "schemas/test/g.schema.json#/properties/aid"
 			},
 			"destination": {
-				"$ref": "schemas/test/h.schema.json#/properties/aid"
+				"$ref": "schemas/test/h.schema.json#/properties/data/properties/result/properties/aid"
 			},
 			"multiplicity": "0-*"
 		},
@@ -96,7 +96,7 @@
 				"$ref": "schemas/test/g.schema.json#/properties/field3"
 			},
 			"destination": {
-				"$ref": "schemas/test/h.schema.json#/properties/name"
+				"$ref": "schemas/test/h.schema.json#/properties/data/properties/result/properties/name"
 			},
 			"multiplicity": "0-*"
 		},
@@ -105,7 +105,7 @@
 				"$ref": "schemas/test/g.schema.json#/properties/field4"
 			},
 			"destination": {
-				"$ref": "schemas/test/h.schema.json#/properties/telephone/properties/number"
+				"$ref": "schemas/test/h.schema.json#/properties/data/properties/result/properties/number"
 			},
 			"multiplicity": "0-*"
 		}

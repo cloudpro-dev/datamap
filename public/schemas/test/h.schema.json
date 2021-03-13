@@ -1,42 +1,53 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://yourdomain.com/schemas/test/h.schema.json",
-    "title": "Object H",
-    "type": "object",
-    "properties": {
-      "id": {
-        "type": "number",
-        "description": "Identifier for the object",
-        "minLength": 0,
-        "maxLength": 8
-      },
-      "aid": {
-        "type": "number",
-        "description": "Identifier for A",
-        "minLength": 0,
-        "maxLength": 8
-      },
-      "name": {
-        "type": "string",
-        "description": "The name of the object",
-        "minLength": 3,
-        "maxLength": 255
-      },
-      "telephone": {
-        "type": "object",
-        "properties": {
-          "ext": {
-            "type": "string",
-            "minLength": 3,
-            "maxLength": 3
-          },
-          "number": {
-            "type": "string",
-            "minLength": 8,
-            "maxLength": 10
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://yourdomain.com/schemas/test/h.schema.json",
+  "title": "Object H",
+  "type": "object",
+  "root": "/properties/data/properties/result/properties",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "description": "Identifier for the object",
+              "minLength": 0,
+              "maxLength": 8
+            },
+            "aid": {
+              "type": "number",
+              "description": "Identifier for A",
+              "minLength": 0,
+              "maxLength": 8
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the object",
+              "minLength": 3,
+              "maxLength": 255
+            },
+            "telephone": {
+              "type": "object",
+              "properties": {
+                "ext": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 3
+                },
+                "number": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 10
+                }
+              }
+            }
           }
         }
       }
     }
   }
+}
   

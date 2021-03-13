@@ -641,7 +641,17 @@ async function draw(mapPath, viewPath) {
             fields[key] = {}
             fields[key]['key'] = key
             fields[key]['pointer'] = pointer
-            fields[key]['label'] = pointer.replaceAll('/properties', '')
+            
+            // if schema root is defined then strip the label of the first part 
+            // as defined by the root property
+            if(json.root) {
+                let label = pointer.replaceAll(json.root, '')
+                fields[key]['label'] = label.replaceAll('/properties', '')
+            }
+            else {
+                fields[key]['label'] = pointer.replaceAll('/properties', '')
+            }
+
             fields[key]['label'] = fields[key]['label'].substring(1) // strip leading forward-slash
             fields[key]['mapped'] = false
             fields[key]['node'] = JsonPointer.get(json, pointer)

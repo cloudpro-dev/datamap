@@ -17,6 +17,45 @@ The schema can represent either flat or hierarchical data.
 ### Field
 Each schema contains a number of `Field` definitions.  The minimum information that can be defined for a `Field` is `name` and `type`.
 
+#### Rooting
+
+Allow JSON `root` to be defined in a `Schema` definition file.  This useful for discarding ancestors from the display path
+
+Suppose we have the follow piece of JSON data:
+```
+{
+    "data": {
+        "result": {
+            "field1": "val1"
+        }
+    }
+}
+```
+Using the this Schema to describe the data:
+```
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "root": "/properties/data/properties/result",
+    "properties": {
+        "data": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "type": "object",
+                    "properties": {
+                        "field1": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+The label displayed in the Field would be `field1` instead of `data/result/field1`.
+
 #### Meta Data
 Each field can contain optional meta-data to further enrich the information of the field.  Define meta-data in the `meta` section of a JSON schema using key/value pairs. For example:
 ```
@@ -100,49 +139,12 @@ Ordered list of `transformations` which is defined in the map against a `source`
 
 The following tasks are considered in scope for this POC:
 
-1. Allow JSON `root` to be defined in a `Schema` definition file.  This useful for discarding ancestors from the display path
-
-    Suppose we have the follow piece of JSON data:
-    ```
-    {
-        "data": {
-            "result": {
-                "field1": "val1"
-            }
-        }
-    }
-    ```
-    Using the this Schema to describe the data:
-    ```
-    {
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "type": "object",
-        "root": "/properties/data/properties/result",
-        "properties": {
-            "data": {
-                "type": "object",
-                "properties": {
-                    "result": {
-                        "type": "object",
-                        "properties": {
-                            "field1": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    ```
-    The label displayed in the Field would be `field1` instead of `data/result/field1`.
-
-2. Given a `Schema` file, generate a fake JSON payload using [json-schema-faker](https://www.npmjs.com/package/json-schema-faker)
-3. Load mask for initial display
-4. Multipicity labels on the schema view between entities, either end of the connector.  Where would we define?
-5. Design a way of *defining* and *visualing* any transformation between a source and destination field
-6. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
-7. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
+1. Given a `Schema` file, generate a fake JSON payload using [json-schema-faker](https://www.npmjs.com/package/json-schema-faker)
+2. Load mask for initial display
+3. Multipicity labels on the schema view between entities, either end of the connector.  Where would we define?
+4. Design a way of *defining* and *visualing* any transformation between a source and destination field
+5. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
+6. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
 
 # Defects
 
