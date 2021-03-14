@@ -49,6 +49,14 @@
 .panel-header {
     padding: 10px;
     background-color: #eee;
+    display: flex;
+    align-items: center;
+}
+.panel-header span {
+    flex-grow: 1;
+}
+.panel-header a {
+    flex-grow: 1;
 }
 .panel-body {
     overflow-y: scroll;
@@ -77,6 +85,7 @@
     padding: 5px;
     display: flex;
     flex-flow: row nowrap;
+    align-items: center;
     cursor: default;
 }
 .field div {
@@ -86,6 +95,7 @@
 .field div.field-label {
     flex-grow:1;
     margin-right: 10px;
+    /*word-wrap: break-word;*/
 }
 .field div.field-datatype {
     text-transform: uppercase;
@@ -96,6 +106,18 @@
     text-align: right;
     width: 50px;
 }
+.field.selected {
+    background-color: yellow;
+}
+.field.matched {
+    background-color: greenyellow;
+}
+
+/* Icons */
+
+
+
+/*
 .icon:before {
     content: "";
     display: block;
@@ -105,12 +127,30 @@
     float: left;
     margin: 3px 6px 0 0;
 }
-.field.selected {
-    background-color: yellow;
+*/
+
+.icon:before {
+    content: "";
+    display: block;
+    width: 24px;
+    height: 24px;
+    float: left;
 }
-.field.matched {
-    background-color: greenyellow;
+
+.label-icon:before {
+    background: url("label.svg") no-repeat;
+    margin: 0 5px 0 0;
+    filter: invert(95%) sepia(0%) saturate(42%) hue-rotate(224deg) brightness(90%) contrast(83%);
 }
+
+.faker-icon:before {
+    background: url("transform.svg") no-repeat;
+    filter: invert(73%) sepia(0%) saturate(1585%) hue-rotate(237deg) brightness(94%) contrast(90%);
+}
+.faker-icon:hover {
+    filter: invert(13%) sepia(52%) saturate(6921%) hue-rotate(356deg) brightness(92%) contrast(119%);
+}
+
 
 /* SVG elements */
 

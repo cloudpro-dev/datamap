@@ -14,6 +14,7 @@
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.7",
     "dagre": "^0.8.5",
+    "faker": "^5.4.0",
     "jquery": "^3.5.1",
     "json-pointer": "^0.6.1"
   }

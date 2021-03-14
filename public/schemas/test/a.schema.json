@@ -5,18 +5,29 @@
   "type": "object",
   "properties": {
     "id": {
-      "type": "number",
+      "type": "integer",
       "description": "The identifier for the object",
-      "minLength": 0,
+      "minimum": 0,
       "maxLength": 8,
       "meta": {
         "UI Field Label": "Object Identifier",
         "Help text": "This is the main identifier used by systems to distinguish it between other entities"
+      },
+      "faker": {
+        "id": "random.number",
+        "options": [
+          {
+            "min": 0,
+            "max": 100,
+            "precision": 1
+          }
+        ]
       }
     },
     "name": {
       "type": "string",
       "description": "The name of the object",
+      "faker": "name.findName",
       "minLength": 3,
       "maxLength": 255,
       "meta": {
@@ -27,12 +38,21 @@
     "code": {
       "type": "string",
       "description": "The code for the object",
-      "minLength": 2,
-      "maxLength": 20,
+      "default": "ABC12345",
+      "examples": ["ABC-12345", "DEF-12345", "GHI-12345"],
+      "minLength": 8,
+      "maxLength": 8,
       "meta": {
         "UI Field Label": "Code",
         "Help text": "An uppercase alpha-numeric string, used for reporting purposes"
+      },
+      "faker": {
+        "id": "helpers.replaceSymbols",
+        "options": ["CDC-###-???-01"]
       }
     }
-  }
+  },
+  "required": [
+    "id", "name", "code"
+  ]
 }

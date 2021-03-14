@@ -4,6 +4,7 @@ import $, { data } from 'jquery'
 import dagre, { layout } from 'dagre'
 import $RefParser from '@apidevtools/json-schema-ref-parser'
 import JsonPointer from 'json-pointer'
+import faker from 'faker'
 
 /** Main application state */
 const state = {
@@ -109,6 +110,7 @@ const getDescendants = (data, selectedKey) => {
     return descendants.flat()
 }
 
+/** Filter fields in the schema by name */
 const getFilteredFields = (fields, e) => {
     let text = $(e.currentTarget).val()
     state.query = text
@@ -128,6 +130,7 @@ const getFilteredFields = (fields, e) => {
     return matches
 }
 
+/** Auto-complete field handler */
 const onAutoComplete = (evt, fields, matched) => {
     // console.log("onAutoComplete", matched);
 
@@ -152,7 +155,67 @@ const onAutoComplete = (evt, fields, matched) => {
     }
 }
 
-/* Calculate if a field is currently visible in the scrollable panel */
+/** Reads the schema and generates a matching JSON payload */
+const fakeJson = (root) => {
+    let payload = {};
+    for(let key in root.properties) {
+        // precedence for value calculation:
+        // 1. default value in schema
+        // 1. examples in schema
+        // 2. faker config in schema
+        // 3. null
+        
+        // default value
+        payload[key] = null;
+
+        // see if we have a more specific value available
+
+        if(root.properties[key].default) {
+            payload[key] = root.properties[key].default
+        }
+        else if(root.properties[key].examples) {
+            // use examples instead of faker
+
+            // random select from array of examples
+            let max = root.properties[key].examples.length
+            let rand = Math.floor(Math.random() * Math.floor(max))
+            
+            // add the randomly selected example
+            payload[key] = root.properties[key].examples[rand]
+        }
+        else if(root.properties[key].faker) {
+            // use faker for data generation
+
+            if(root.properties[key].faker) {
+                if(typeof root.properties[key].faker === 'string' || root.properties[key].faker instanceof String) {
+                    // basic faker
+                    payload[key] = faker.fake("{{" + root.properties[key].faker + "}}")
+                }
+                else {
+                    // faker with options
+
+                    // split namespace and function name from simple string
+                    let opts = root.properties[key].faker;
+                    let ns = opts.id.split('.')[0];
+                    let fn = opts.id.split('.')[1];
+
+                    // use apply to pass an array of arguments to faker method
+                    payload[key] = faker[ns][fn].apply(null, opts.options)
+                }
+            }
+        }
+        
+        // recurse object if necessary
+        if(root.properties[key].type == 'object') {
+            if(root.properties[key].properties) {
+                payload[key] = fakeJson(root.properties[key]);
+            }
+        }
+    }
+    return payload;
+}
+
+/** Calculate if a field is currently visible in the scrollable panel */
 const isFieldVisible = function (element, parent, fullyInView) {
     var pageTop = $(parent).offset().top;
     var pageBottom = pageTop + $(parent).height();
@@ -323,7 +386,7 @@ const onFieldSelect = (event, data, fields) => {
     Promise.all(actions).then(fields => fields.forEach(f => animateMarker(f)))
 }
 
-/* Returns true if the current view contains the specified schema **/
+/** Returns true if the current view contains the specified schema */
 const viewContainsSchema = function(view, path) {
     let found = false;
     for(let i = 0; i<view.schemas.length; i++) {
@@ -334,7 +397,7 @@ const viewContainsSchema = function(view, path) {
     return false;
 }
 
-/* Returns the configuration for the schema or null if not found **/
+/** Returns the configuration for the schema or null if not found */
 const getSchemaView = function(view, path) {
     for(let i = 0; i<view.schemas.length; i++) {
         if(view.schemas[i]['$ref'] === path) {
@@ -603,7 +666,7 @@ async function draw(mapPath, viewPath) {
     const schemas = {}
     // parser for dereferencing
     const parser = new $RefParser()
-    
+
     for (let path of state.paths) {
         // fetch the schema file
         let response = await fetch(path)
@@ -620,10 +683,16 @@ async function draw(mapPath, viewPath) {
         // create DOM panel
         let $tpl = $(
             `<div class="panel">
-                <div class="panel-header">${json.title}</div>
+                <div class="panel-header"><span>${json.title}</span><i class="icon faker-icon"></i></div>
                 <div class="panel-body"></div>
             </div>`
         ).data('key', path)
+
+        let payload = fakeJson(json)
+
+        $tpl.find('.faker-icon').on('click', e => {
+            alert(JSON.stringify(payload));
+        })
 
         schemas[path] = {
             dom: $tpl,
@@ -631,6 +700,7 @@ async function draw(mapPath, viewPath) {
             sortDir: null,
             // pointers: pointers,
             fields: [],
+            payload: payload
         }
 
         // for each Field of a Schema
@@ -661,8 +731,9 @@ async function draw(mapPath, viewPath) {
             // DOM element for Field
             let $el = $(
                 `<div class="field">
+                    <i class="icon label-icon"></i>
                     <div class="field-label">
-                        <i class="icon icon-tag"></i>${fields[key]['label']}${fields[key]['node'].minLength > 0 ? ' <em class="mandatory">(*)</em>' : ''}
+                        ${fields[key]['label']}${fields[key]['node'].minLength > 0 ? ' <em class="mandatory">(*)</em>' : ''}
                     </div>
                     <div class="field-datatype">${fields[key]['node'].type}</div>
                     <div class="field-maxlength">(${fields[key]['node'].maxLength})</div>
