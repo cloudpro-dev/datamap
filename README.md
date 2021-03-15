@@ -5,9 +5,26 @@ FieldView is a software solution for visualising the mapping of data between one
 In even the most simple of integrated solutions you will find that data is continually mapped between one solution and another.  A good example of such a mapping is an API which presents data in one form and an application which consumes that data.  The consuming application is unlikely to have the same format as the incoming data and as such some mapping will occur.  When this mapping happens occurs over more than one layer it can become difficult to track this mappings.
 
 One way flow, not an ER tool!
-We might in fact have the same system shown more than once in a flow!
+
+# Destination
 
 # Terminology
+
+## Source
+
+We need to consider data at the highest level.  It is not important which interfaces provide the data between the systems, it is all about distinct `sources` and `destinations`.
+
+Don't try to model the technologies, you need to model the partitioned data on a per case basis.
+
+Potential sources could be:
+- Web form
+- Interface message
+
+If you have the **same system** in the model twice then you are doing it wrong.
+
+## Destination
+
+A location that a source is linked to via a `Map`.
 
 ## Diagram
 A diagram contains many schemas and has an orthagonal layout with edge grouping.
