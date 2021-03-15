@@ -214,17 +214,12 @@ Using a `View` you can define a default panel height and also the height of each
 
 # Backlog
 
-The following tasks are considered in scope for this POC:
+The following tasks are considered in scope:
 
-1. Given a `Schema` file, generate a fake JSON payload using either `default`, `examples` or using [Faker](https://github.com/marak/Faker.js/)
-2. SVG Icons to improve visual scalability/zoom
-3. Use JSON Schema `required` property to control mandatory flag on Field, rather than `minLength` benig equal to `0`
-4. Remove `graph.js` and fold class into `app.js`
-5. Load mask for initial display
-6. Multipicity labels on the schema view between entities, either end of the connector.  Where would we define?
-7. Design a way of *defining* and *visualing* any transformation between a source and destination field
-8. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
-9. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
+1. Use JSON Schema `required` property to control mandatory flag on Field, rather than `minLength` benig equal to `0`
+2. Remove `graph.js` and fold class into `app.js`
+3. Load mask for initial display
+6. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
 
 # Defects
 
@@ -249,6 +244,9 @@ The following ideas should be considered as future enhancments:
 10. Show hierarchical fields as a tree so that you can fold whole sections up/down, including necessary arrow changes
 11. Map analysis to find columns which will not fit between source and destination
 12. Use ML to guess the data types from a payload
+13. Design a way of *defining* and *visualing* any transformation between a source and destination field
+14. Multipicity labels on the schema view between entities, either end of the connector.  Where would we define?
+15. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
 
 ## Field Flow
 
