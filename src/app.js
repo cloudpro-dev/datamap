@@ -624,6 +624,25 @@ const refreshFields = (id) => {
     }
 }
 
+/** Returns true if the supplied field is required */
+const isFieldRequired = (schema, pointer) => {
+    let key = pointer.substring(pointer.lastIndexOf('/') + 1)
+    let props = pointer.substring(0, pointer.lastIndexOf('/properties'))
+    
+    let node = JsonPointer.get(schema, pointer)
+    let parent = JsonPointer.get(schema, props);
+
+    // console.log("isFieldRequired", pointer, parent.required, node.minLength);
+
+    if(props.required && props.required.includes(key)) {
+        return true;
+    }
+    if(node.minLength && node.minLength > 0) {
+        return true;
+    }
+    return false;
+}
+
 /** Draw and layout the page including the SVG arrows */
 async function draw(mapPath, viewPath) {
     const svg = new Svg()
@@ -728,12 +747,15 @@ async function draw(mapPath, viewPath) {
             fields[key]['selected'] = false
             fields[key]['animComplete'] = false
 
+            // work out if a field is required
+            let required = isFieldRequired(json, pointer);
+
             // DOM element for Field
             let $el = $(
                 `<div class="field">
                     <i class="icon label-icon"></i>
                     <div class="field-label">
-                        ${fields[key]['label']}${fields[key]['node'].minLength > 0 ? ' <em class="mandatory">(*)</em>' : ''}
+                        ${fields[key]['label']}${required ? ' <em class="mandatory">(*)</em>' : ''}
                     </div>
                     <div class="field-datatype">${fields[key]['node'].type}</div>
                     <div class="field-maxlength">(${fields[key]['node'].maxLength})</div>

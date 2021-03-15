@@ -216,10 +216,9 @@ Using a `View` you can define a default panel height and also the height of each
 
 The following tasks are considered in scope:
 
-1. Use JSON Schema `required` property to control mandatory flag on Field, rather than `minLength` benig equal to `0`
-2. Remove `graph.js` and fold class into `app.js`
-3. Load mask for initial display
-6. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
+1. Remove `graph.js` and fold class into `app.js`
+2. Load mask for initial display
+3. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
 
 # Defects
 
