@@ -216,7 +216,7 @@ Using a `View` you can define a default panel height and also the height of each
 
 The following tasks are considered in scope:
 
-1. Remove `graph.js` and fold class into `app.js`
+1. Improve mandatory marker using Material Icons
 2. Load mask for initial display
 3. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
 

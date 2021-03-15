@@ -1,10 +1,12 @@
 import Svg from './svg'
-import Graph from './graph'
 import $, { data } from 'jquery'
 import dagre, { layout } from 'dagre'
 import $RefParser from '@apidevtools/json-schema-ref-parser'
 import JsonPointer from 'json-pointer'
 import faker from 'faker'
+
+/** Global SVG object */
+const svg = null
 
 /** Main application state */
 const state = {
@@ -21,9 +23,6 @@ const state = {
     }
 }
 
-// SVG layer
-const svg = null
-
 /** Build a dependency Graph */
 function buildDependencyGraph(data, view) {
     let nodes = new Map()
@@ -39,10 +38,10 @@ function buildDependencyGraph(data, view) {
         }
         // create a new graph node if necessary
         if (!nodes.has(source)) {
-            nodes.set(source, new Graph.Node(source))
+            nodes.set(source, new Node(source))
         }
         if (!nodes.has(destination)) {
-            nodes.set(destination, new Graph.Node(destination))
+            nodes.set(destination, new Node(destination))
         }
         // each node can have multiple edges
         nodes.get(source).addEdge(nodes.get(destination))
@@ -989,3 +988,15 @@ $(function () {
 
     loadMap('maps/test.map.json', 'views/test.view.json')
 })
+
+/** Node used in dependency graph */
+const Node = function Node(name) {
+    this.name = name;
+    this.edges = [];
+}
+Node.prototype.addEdge = function(node) {
+    // unique dependencies only
+    if(!this.edges.includes(node)) {
+        this.edges.push(node);
+    }
+}
