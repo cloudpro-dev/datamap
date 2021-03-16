@@ -249,6 +249,7 @@ The following ideas should be considered as future enhancments:
 14. Multipicity labels on the schema view between entities, either end of the connector.  Where would we define?
 15. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
 16. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
+17. During ingestion of existing payload, populate the `examples` array of the `Schema`.
 
 ## Field Flow
 

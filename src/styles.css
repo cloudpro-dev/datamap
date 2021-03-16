@@ -129,20 +129,20 @@
 }
 
 .label-icon:before {
-    background: url("label.svg") no-repeat;
+    background: url("images/label.svg") no-repeat;
     margin: 0 5px 0 0;
     filter: invert(95%) sepia(0%) saturate(42%) hue-rotate(224deg) brightness(90%) contrast(83%);
 }
 
 .required-icon:before {
-    background: url("link.svg") no-repeat;
+    background: url("images/link.svg") no-repeat;
     margin: 0 5px 0 0;
     filter: invert(95%) sepia(0%) saturate(42%) hue-rotate(224deg) brightness(90%) contrast(83%);
     float: none;
 }
 
 .faker-icon:before {
-    background: url("transform.svg") no-repeat;
+    background: url("images/transform.svg") no-repeat;
     filter: invert(73%) sepia(0%) saturate(1585%) hue-rotate(237deg) brightness(94%) contrast(90%);
 }
 .faker-icon:hover {
