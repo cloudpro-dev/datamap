@@ -754,7 +754,7 @@ async function draw(mapPath, viewPath) {
                 `<div class="field">
                     <i class="icon label-icon"></i>
                     <div class="field-label">
-                        ${fields[key]['label']}${required ? ' <em class="mandatory">(*)</em>' : ''}
+                        <span>${fields[key]['label']}</span>${required ? ' <i class="icon required-icon"></i>' : ''}
                     </div>
                     <div class="field-datatype">${fields[key]['node'].type}</div>
                     <div class="field-maxlength">(${fields[key]['node'].maxLength})</div>

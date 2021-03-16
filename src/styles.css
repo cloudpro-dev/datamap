@@ -95,7 +95,12 @@
 .field div.field-label {
     flex-grow:1;
     margin-right: 10px;
+    display: flex; 
     /*word-wrap: break-word;*/
+}
+.field div.field-label span {
+    line-height: 24px;
+    margin-right: 7px;
 }
 .field div.field-datatype {
     text-transform: uppercase;
@@ -141,6 +146,13 @@
     background: url("label.svg") no-repeat;
     margin: 0 5px 0 0;
     filter: invert(95%) sepia(0%) saturate(42%) hue-rotate(224deg) brightness(90%) contrast(83%);
+}
+
+.required-icon:before {
+    background: url("link.svg") no-repeat;
+    margin: 0 5px 0 0;
+    filter: invert(95%) sepia(0%) saturate(42%) hue-rotate(224deg) brightness(90%) contrast(83%);
+    float: none;
 }
 
 .faker-icon:before {

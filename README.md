@@ -6,6 +6,10 @@ In even the most simple of integrated solutions you will find that data is conti
 
 One way flow, not an ER tool!
 
+Many different ways to model the same data.
+
+Find field interactions across multiple systems to help impact assess the size of a change.
+
 # Destination
 
 # Terminology
@@ -216,9 +220,8 @@ Using a `View` you can define a default panel height and also the height of each
 
 The following tasks are considered in scope:
 
-1. Improve mandatory marker using Material Icons
-2. Load mask for initial display
-3. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
+1. Load mask for initial display
+2. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
 
 # Defects
 
