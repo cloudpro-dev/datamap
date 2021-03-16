@@ -220,8 +220,7 @@ Using a `View` you can define a default panel height and also the height of each
 
 The following tasks are considered in scope:
 
-1. Load mask for initial display
-2. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
+**No more work to do, just test the current implementation!!**
 
 # Defects
 
@@ -249,6 +248,7 @@ The following ideas should be considered as future enhancments:
 13. Design a way of *defining* and *visualing* any transformation between a source and destination field
 14. Multipicity labels on the schema view between entities, either end of the connector.  Where would we define?
 15. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
+16. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
 
 ## Field Flow
 

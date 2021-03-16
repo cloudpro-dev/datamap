@@ -642,6 +642,17 @@ const isFieldRequired = (schema, pointer) => {
     return false;
 }
 
+/** Show/hide the loading spinner */
+const showLoadingSpinner = (show) => {
+    if(show) {
+        $('.loading-mask').show();
+    }
+    else {
+        $('.loading-mask').fadeOut('fast');
+        $('.loading-spinner').addClass('-paused');
+    }
+}
+
 /** Draw and layout the page including the SVG arrows */
 async function draw(mapPath, viewPath) {
     const svg = new Svg()
@@ -984,8 +995,12 @@ $(function () {
         // draw the map using a view
         await draw(map, view)
         console.log('state', state)
+        setTimeout(e => {
+            showLoadingSpinner(false)
+        }, 500);
     }
 
+    showLoadingSpinner(true)
     loadMap('maps/test.map.json', 'views/test.view.json')
 })
 
