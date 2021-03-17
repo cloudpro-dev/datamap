@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://yourdomain.com/schemas/intro/LeadStatus.schema.json",
+    "title": "LeadStatus",
+    "type": "object",
+    "properties": {
+        "Id": {
+            "type": "integer"
+        },
+        "MasterLabel": {
+            "type": "string"
+        },
+        "ApiName": {
+            "type": "string"
+        },
+        "SortOrder": {
+            "type": "string"
+        },
+        "IsDefault": {
+            "type": "string"
+        },
+        "IsConverted": {
+            "type": "string"
+        },
+        "CreatedById": {
+            "type": "integer"
+        },
+        "CreatedDate": {
+            "type": "date-time"
+        },
+        "LastModifiedById": {
+            "type": "integer"
+        },
+        "LastModifiedDate": {
+            "type": "date-time"
+        },
+        "SystemModstamp": {
+            "type": "integer"
+        }
+    }
+}

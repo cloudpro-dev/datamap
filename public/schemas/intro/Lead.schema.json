@@ -1,0 +1,83 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://yourdomain.com/schemas/intro/Lead.schema.json",
+    "title": "Lead",
+    "type": "object",
+    "properties": {
+        "Id": {
+            "type": "integer"
+        },
+        "IsDeleted": {
+            "type": "string"
+        },
+        "MasterRecordId": {
+            "type": "integer"
+        },
+        "LastName": {
+            "type": "string"
+        },
+        "FirstName": {
+            "type": "string"
+        },
+        "Salutation": {
+            "type": "string"
+        },
+        "Name": {
+            "type": "string"
+        },
+        "Title": {
+            "type": "string"
+        },
+        "Company": {
+            "type": "string"
+        },
+        "Street": {
+            "type": "string"
+        },
+        "City": {
+            "type": "string"
+        },
+        "State": {
+            "type": "string"
+        },
+        "PostalCode": {
+            "type": "string"
+        },
+        "Country": {
+            "type": "string"
+        },
+        "Latitude": {
+            "type": "number"
+        },
+        "Longitude": {
+            "type": "number"
+        },
+        "GeocodeAccuracy": {
+            "type": "number"
+        },
+        "Address": {
+            "type": "string"
+        },
+        "Phone": {
+            "type": "string"
+        },
+        "MobilePhone": {
+            "type": "string"
+        },
+        "Fax": {
+            "type": "string"
+        },
+        "Email": {
+            "type": "string"
+        },
+        "Website": {
+            "type": "string"
+        },
+        "PhotoUrl": {
+            "type": "string"
+        },
+        "Description": {
+            "type": "string"
+        }
+    }
+}

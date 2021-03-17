@@ -1,0 +1,119 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://yourdomain.com/schemas/intro/LeadData.schema.json",
+    "title": "LeadData",
+    "type": "object",
+    "properties": {
+        "Id": {
+            "type": "integer"
+        },
+        "IsDeleted": {
+            "type": "string"
+        },
+        "MasterRecordId": {
+            "type": "integer"
+        },
+        "LastName": {
+            "type": "string"
+        },
+        "FirstName": {
+            "type": "string"
+        },
+        "Salutation": {
+            "type": "string"
+        },
+        "Name": {
+            "type": "string"
+        },
+        "Title": {
+            "type": "string"
+        },
+        "Company": {
+            "type": "string"
+        },
+        "Street": {
+            "type": "string"
+        },
+        "City": {
+            "type": "string"
+        },
+        "State": {
+            "type": "string"
+        },
+        "PostalCode": {
+            "type": "string"
+        },
+        "Country": {
+            "type": "string"
+        },
+        "Latitude": {
+            "type": "number"
+        },
+        "Longitude": {
+            "type": "number"
+        },
+        "GeocodeAccuracy": {
+            "type": "number"
+        },
+        "Address": {
+            "type": "string"
+        },
+        "Phone": {
+            "type": "string"
+        },
+        "MobilePhone": {
+            "type": "string"
+        },
+        "Fax": {
+            "type": "string"
+        },
+        "Email": {
+            "type": "string"
+        },
+        "HistoryId": {
+            "type": "integer"
+        },
+        "HistoryIsDeleted": {
+            "type": "string"
+        },
+        "HistoryCreatedDate": {
+            "type": "date-time"
+        },
+        "HistoryCreatedById": {
+            "type": "integer"
+        },
+        "StatusId": {
+            "type": "integer"
+        },
+        "StatusMasterLabel": {
+            "type": "string"
+        },
+        "StatusApiName": {
+            "type": "string"
+        },
+        "StatusSortOrder": {
+            "type": "string"
+        },
+        "StatusIsDefault": {
+            "type": "string"
+        },
+        "StatusIsConverted": {
+            "type": "string"
+        },
+        "StatusCreatedById": {
+            "type": "integer"
+        },
+        "StatusCreatedDate": {
+            "type": "date-time"
+        },
+        "StatusLastModifiedById": {
+            "type": "integer"
+        },
+        "StatusLastModifiedDate": {
+            "type": "date-time"
+        },
+        "StatusSystemModstamp": {
+            "type": "integer"
+        }
+    }
+}

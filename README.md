@@ -250,6 +250,7 @@ The following ideas should be considered as future enhancments:
 15. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
 16. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
 17. During ingestion of existing payload, populate the `examples` array of the `Schema`.
+18. Use different colours for each non-related panel and match the colour of the arrows to the panel. See [Example](images/introduction2.png)
 
 ## Field Flow
 
