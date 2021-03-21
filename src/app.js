@@ -483,6 +483,7 @@ const layoutPanels = (g, nodes, schemas, svg, view) => {
 
         var prevLeft = 0;
         schemas[v].dom.find('.panel-body').scroll(function (evt) {
+            
             // only respond to vertical scroll events
             var currentLeft = $(this).scrollLeft()
             // refresh arrows on vertical scroll only
@@ -492,7 +493,7 @@ const layoutPanels = (g, nodes, schemas, svg, view) => {
                 // hiding fields triggers a scroll event
                 if(state.view.showFields === true) {
                     // only draw arrows if we are showing fields
-                    drawFieldArrows(svg, state.map, state.fields)
+                    drawFieldArrows(svg, state.map, state.fields, state.view)
                 }
             }
         })
@@ -529,7 +530,7 @@ const drawSchemaArrows = function(graph, schemas, svg) {
 }
 
 /** Redraw the SVG arrows */
-const drawFieldArrows = (svg, data, fields) => {
+const drawFieldArrows = (svg, data, fields, view) => {
     svg.emptyCanvas();
 
     for (let m in data.map) {
@@ -542,6 +543,9 @@ const drawFieldArrows = (svg, data, fields) => {
             let srcPanel = $(fields[s].dom[0]).parents('.panel')
             let destPanel = $(fields[d].dom[0]).parents('.panel')
 
+            let srcView = view.schemas.filter(p => p['$ref'] == s.substring(0, s.indexOf('#')))[0];
+            let destView =  view.schemas.filter(p => p['$ref'] == d.substring(0, d.indexOf('#')))[0];
+
             let connect = {
                 source: {
                     el: fields[s].dom[0],
@@ -549,9 +553,10 @@ const drawFieldArrows = (svg, data, fields) => {
                     maxY: srcParent.offset().top + srcParent.height(),
                     scrollWidth:
                         srcParent[0].offsetWidth - srcParent[0].clientWidth,
-                    borderWidth: 5, // srcPanel[0].clientTop,
+                    borderWidth: 2, // srcPanel[0].clientTop,
                     animComplete: fields[s].animComplete,
-                    multiplicity: fields[s].multiplicity || ""
+                    multiplicity: fields[s].multiplicity || "",
+                    cssClass: srcView.panelClass
                 },
                 destination: {
                     el: fields[d].dom[0],
@@ -559,13 +564,12 @@ const drawFieldArrows = (svg, data, fields) => {
                     maxY: destParent.offset().top + destParent.height(),
                     scrollWidth:
                         destParent[0].offsetWidth - destParent[0].clientWidth,
-                    borderWidth: 5 // destParent[0].clientTop
+                    borderWidth: 2 // destParent[0].clientTop
                 },
                 color:
                     fields[s].selected || fields[d].selected
                         ? 'red'
                         : 'blue',
-                slack: 0.2,
                 selected: fields[s].selected || fields[d].selected
             }
             // console.log("connect", m, connect);
@@ -666,7 +670,8 @@ async function draw(mapPath, viewPath) {
     // fetch the view file
     response = await fetch(viewPath)
     let view = await response.json()
-    console.log("view", view);
+    state.view = {...state.view, ...view}; // add to existing options
+    console.log("view", state.view);
 
     //
     // Step 1. Load list of paths for defined properties
@@ -716,6 +721,9 @@ async function draw(mapPath, viewPath) {
                 <div class="panel-body"></div>
             </div>`
         ).data('key', path)
+
+        // add custom panel class if defined in the view
+        view.schemas.forEach(s => s['$ref'] == path && s.panelClass ? $tpl.addClass(s.panelClass) : null);
 
         let payload = fakeJson(json)
 
@@ -840,7 +848,7 @@ async function draw(mapPath, viewPath) {
     //
     // Step 4. Draw the arrows
     //
-    drawFieldArrows(svg, state.map, state.fields)
+    drawFieldArrows(svg, state.map, state.fields, state.view)
 
     //
     // Step 5. Setup event handlers
@@ -875,7 +883,7 @@ async function draw(mapPath, viewPath) {
         svg.emptyCanvas()
 
         if(state.view.showFields === true) {
-            drawFieldArrows(svg, state.map, state.fields)
+            drawFieldArrows(svg, state.map, state.fields, state.view)
         }
         else {
             drawSchemaArrows(dependencyGraph, schemas, svg);

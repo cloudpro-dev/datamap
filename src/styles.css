@@ -1,3 +1,7 @@
+body {
+    background-color: #f5f5f5;
+}
+
 /* Fixed header */
 
 .fixed-header, .fixed-footer{
@@ -39,15 +43,16 @@
 /* Panel */
 
 .panel {
-    border: 3px solid #ccc;
+    border: 1px solid #777;
     width:300px;
     position:absolute;
     top:0;
     left:0;
     z-index: 10;
+    background-color: white;
 }
 .panel-header {
-    padding: 10px;
+    padding: 8px 10px;
     background-color: #eee;
     display: flex;
     align-items: center;
@@ -61,6 +66,7 @@
 .panel-body {
     overflow-y: scroll;
     position:relative;
+    border-top: 1px solid #777;
 }
 
 /* Tooltip */
@@ -87,9 +93,9 @@
     flex-flow: row nowrap;
     align-items: center;
     cursor: default;
+    color: #777;
 }
-.field div {
-    color: #777; 
+.field div { 
     font-size: 1em;
 }
 .field div.field-label {
@@ -113,6 +119,7 @@
 }
 .field.selected {
     background-color: yellow;
+    font-weight: bold;
 }
 .field.matched {
     background-color: greenyellow;
@@ -132,6 +139,7 @@
     background: url("images/label.svg") no-repeat;
     margin: 0 5px 0 0;
     filter: invert(95%) sepia(0%) saturate(42%) hue-rotate(224deg) brightness(90%) contrast(83%);
+    transform: rotate(180, 0);
 }
 
 .required-icon:before {
@@ -275,4 +283,145 @@
     transform: translate3d(-50%, -50%, 0);
     width: 100px;
     will-change: transform;
+}
+
+/* Panel colours */
+
+/* Green Panel */
+
+.green-panel .panel-header {
+    background-color: green;
+    color: white;
+}
+.green-panel .panel-header .icon {
+    filter: brightness(0) invert(1);
+}
+/*
+.green-panel .field.selected {
+    background-color: rgb(84, 212, 84);
+    color: white;
+}
+.green-panel .field.matched {
+    background-color: rgb(84, 212, 84);
+}
+.green-panel .field.selected .label-icon:before {
+    filter: brightness(0) invert(1);
+}
+.green-panel .field.selected .required-icon:before {
+    filter: brightness(0) invert(1);
+}
+*/
+.svg-connector.green-panel rect {
+    fill: green;
+}
+.svg-connector.green-panel polyline {
+    stroke: green;
+}
+.svg-connector.green-panel polygon {
+    fill: green;
+    stroke: green;
+}
+
+/* Purple Panel */
+
+.purple-panel .panel-header {
+    background-color: purple;
+    color: white;
+}
+.purple-panel .panel-header .icon {
+    filter: brightness(0) invert(1);
+}
+/*
+.purple-panel .field.selected {
+    background-color: rgb(216, 51, 216);
+    color: white;
+}
+.purple-panel .field.matched {
+    background-color: rgb(224, 133, 224);
+}
+.purple-panel .field.selected .label-icon:before {
+    filter: brightness(0) invert(1);
+}
+.purple-panel .field.selected .required-icon:before {
+    filter: brightness(0) invert(1);
+}
+*/
+.svg-connector.purple-panel rect {
+    fill: purple;
+}
+.svg-connector.purple-panel polyline {
+    stroke: purple;
+}
+.svg-connector.purple-panel polygon { 
+    fill: purple;
+    stroke: purple;
+}
+
+.red-panel .panel-header {
+    background-color: rgb(223, 8, 8);
+    color: white;
+}
+.red-panel .panel-header .icon {
+    filter: brightness(0) invert(1);
+}
+/*
+.red-panel .field.selected {
+    background-color: rgb(253, 59, 59);
+    color: white;
+}
+.red-panel .field.matched {
+    background-color: rgb(84, 212, 84);
+}
+.red-panel .field.selected .label-icon:before {
+    filter: brightness(0) invert(1);
+}
+.red-panel .field.selected .required-icon:before {
+    filter: brightness(0) invert(1);
+}
+*/
+.svg-connector.red-panel rect {
+    fill: rgb(223, 8, 8);
+}
+.svg-connector.red-panel polyline {
+    stroke: rgb(223, 8, 8);
+}
+.svg-connector.red-panel polygon {
+    fill: rgb(223, 8, 8);
+    stroke: rgb(223, 8, 8);
+}
+
+.blue-panel .panel-header {
+    background-color: blue;
+    color: white;
+}
+.blue-panel .panel-header .icon {
+    filter: brightness(0) invert(1);
+}
+.svg-connector.blue-panel rect {
+    fill: blue;
+}
+.svg-connector.blue-panel polyline {
+    stroke: blue;
+}
+.svg-connector.blue-panel polygon {
+    fill: blue;
+    stroke: blue;
+}
+
+.gold-panel .panel-header {
+    background-color: rgb(218, 188, 21);
+    color: white;
+}
+.gold-panel .panel-header .icon {
+    filter: brightness(0) invert(1);
+}
+.svg-connector.gold-panel rect {
+    fill: rgb(218, 188, 21);
+}
+.svg-connector.gold-panel polyline {
+    stroke: rgb(218, 188, 21);
+}
+.svg-connector.gold-panel polygon {
+    fill: rgb(218, 188, 21);
+    stroke: rgb(218, 188, 21);
 }
