@@ -91,10 +91,10 @@
 		},
 		"Lead-State-Join1-State": {
 			"source": {
-				"$ref": "schemas/intro/Lead.schema.json#/properties/City"
+				"$ref": "schemas/intro/Lead.schema.json#/properties/State"
 			},
 			"destination": {
-				"$ref": "schemas/intro/Join1.schema.json#/properties/City"
+				"$ref": "schemas/intro/Join1.schema.json#/properties/State"
 			}
 		},
 		"Lead-PostalCode-Join1-PostalCode": {
@@ -163,10 +163,10 @@
 		},
 		"Lead-Fax-Join1-Fax": {
 			"source": {
-				"$ref": "schemas/intro/Lead.schema.json#/properties/MobilePhone"
+				"$ref": "schemas/intro/Lead.schema.json#/properties/Fax"
 			},
 			"destination": {
-				"$ref": "schemas/intro/Join1.schema.json#/properties/MobilePhone"
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Fax"
 			}
 		},
 		"Lead-Email-Join1-Email": {
@@ -175,30 +175,6 @@
 			},
 			"destination": {
 				"$ref": "schemas/intro/Join1.schema.json#/properties/Email"
-			}
-		},
-		"Lead-Website-Join1-Website": {
-			"source": {
-				"$ref": "schemas/intro/Lead.schema.json#/properties/Website"
-			},
-			"destination": {
-				"$ref": "schemas/intro/Join1.schema.json#/properties/Website"
-			}
-		},
-		"Lead-PhotoUrl-Join1-PhotoUrl": {
-			"source": {
-				"$ref": "schemas/intro/Lead.schema.json#/properties/PhotoUrl"
-			},
-			"destination": {
-				"$ref": "schemas/intro/Join1.schema.json#/properties/PhotoUrl"
-			}
-		},
-		"Lead-Description-Join1-Description": {
-			"source": {
-				"$ref": "schemas/intro/Lead.schema.json#/properties/Description"
-			},
-			"destination": {
-				"$ref": "schemas/intro/Join1.schema.json#/properties/Description"
 			}
 		},
 		"LeadHistory-Id-Join1-HistoryId": {
@@ -323,10 +299,10 @@
 		},
 		"Join1-State-Join2-State": {
 			"source": {
-				"$ref": "schemas/intro/Join1.schema.json#/properties/City"
+				"$ref": "schemas/intro/Join1.schema.json#/properties/State"
 			},
 			"destination": {
-				"$ref": "schemas/intro/Join2.schema.json#/properties/City"
+				"$ref": "schemas/intro/Join2.schema.json#/properties/State"
 			}
 		},
 		"Join1-PostalCode-Join2-PostalCode": {
@@ -395,10 +371,10 @@
 		},
 		"Join1-Fax-Join2-Fax": {
 			"source": {
-				"$ref": "schemas/intro/Join1.schema.json#/properties/MobilePhone"
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Fax"
 			},
 			"destination": {
-				"$ref": "schemas/intro/Join2.schema.json#/properties/MobilePhone"
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Fax"
 			}
 		},
 		"Join1-Email-Join2-Email": {
@@ -603,10 +579,10 @@
 		},
 		"Join2-Name-LeadData-Name": {
 			"source": {
-				"$ref": "schemas/intro/Join2.schema.json#/properties/Salutation"
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Name"
 			},
 			"destination": {
-				"$ref": "schemas/intro/LeadData.schema.json#/properties/Salutation"
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/Name"
 			}
 		},
 		"Join2-Title-LeadData-Title": {
