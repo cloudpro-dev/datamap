@@ -1,0 +1,26 @@
+{
+    "name": "intro-view",
+    "maxPanelHeight": 300,
+    "schemas": [
+        {
+            "$ref": "schemas/intro/Join1.schema.json",
+            "panelHeight": 500
+        },
+        {
+            "$ref": "schemas/intro/Join2.schema.json",
+            "panelHeight": 500
+        },
+        {
+            "$ref": "schemas/intro/Lead.schema.json"
+        },
+        {
+            "$ref": "schemas/intro/LeadData.schema.json"
+        },
+        {
+            "$ref": "schemas/intro/LeadHistory.schema.json"
+        },
+        {
+            "$ref": "schemas/intro/LeadStatus.schema.json"
+        }
+    ]
+}

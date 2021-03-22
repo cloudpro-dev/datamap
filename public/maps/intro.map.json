@@ -1,0 +1,829 @@
+{
+	"description": "Map intro data",
+	"map": {
+		"Lead-Id-Join1-Id": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/Id"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Id"
+			}
+		},
+		"Lead-IsDeleted-Join1-IsDeleted": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/IsDeleted"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/IsDeleted"
+			}
+		},
+		"Lead-MasterRecordId-Join1-MasterRecordId": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/MasterRecordId"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/MasterRecordId"
+			}
+		},
+		"Lead-LastName-Join1-LastName": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/LastName"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/LastName"
+			}
+		},
+		"Lead-FirstName-Join1-FirstName": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/FirstName"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/FirstName"
+			}
+		},
+		"Lead-Salutation-Join1-Salutation": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/Salutation"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Salutation"
+			}
+		},
+		"Lead-Name-Join1-Name": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/Name"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Name"
+			}
+		},
+		"Lead-Title-Join1-Title": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/Title"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Title"
+			}
+		},
+		"Lead-Company-Join1-Company": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/Company"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Company"
+			}
+		},
+		"Lead-Street-Join1-Street": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/Street"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Street"
+			}
+		},
+		"Lead-City-Join1-City": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/City"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/City"
+			}
+		},
+		"Lead-State-Join1-State": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/State"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/State"
+			}
+		},
+		"Lead-PostalCode-Join1-PostalCode": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/PostalCode"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/PostalCode"
+			}
+		},
+		"Lead-Country-Join1-Country": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/Country"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Country"
+			}
+		},
+		"Lead-Latitude-Join1-Latitude": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/Latitude"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Latitude"
+			}
+		},
+		"Lead-Longitude-Join1-Longitude": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/Longitude"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Longitude"
+			}
+		},
+		"Lead-GeocodeAccuracy-Join1-GeocodeAccuracy": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/GeocodeAccuracy"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/GeocodeAccuracy"
+			}
+		},
+		"Lead-Address-Join1-Address": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/Address"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Address"
+			}
+		},
+		"Lead-Phone-Join1-Phone": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/Phone"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Phone"
+			}
+		},
+		"Lead-MobilePhone-Join1-MobilePhone": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/MobilePhone"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/MobilePhone"
+			}
+		},
+		"Lead-Fax-Join1-Fax": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/Fax"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Fax"
+			}
+		},
+		"Lead-Email-Join1-Email": {
+			"source": {
+				"$ref": "schemas/intro/Lead.schema.json#/properties/Email"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Email"
+			}
+		},
+		"LeadHistory-Id-Join1-HistoryId": {
+			"source": {
+				"$ref": "schemas/intro/LeadHistory.schema.json#/properties/Id"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/HistoryId"
+			}
+		},
+		"LeadHistory-IsDeleted-Join1-HistoryIsDeleted": {
+			"source": {
+				"$ref": "schemas/intro/LeadHistory.schema.json#/properties/IsDeleted"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/HistoryIsDeleted"
+			}
+		},
+		"LeadHistory-CreatedDate-Join1-HistoryCreatedDate": {
+			"source": {
+				"$ref": "schemas/intro/LeadHistory.schema.json#/properties/CreatedDate"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/HistoryCreatedDate"
+			}
+		},
+		"LeadHistory-CreatedById-Join1-HistoryCreatedById": {
+			"source": {
+				"$ref": "schemas/intro/LeadHistory.schema.json#/properties/CreatedById"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/HistoryCreatedById"
+			}
+		},
+		"Join1-Id-Join2-Id": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Id"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Id"
+			}
+		},
+		"Join1-IsDeleted-Join2-IsDeleted": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/IsDeleted"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/IsDeleted"
+			}
+		},
+		"Join1-MasterRecordId-Join2-MasterRecordId": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/MasterRecordId"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/MasterRecordId"
+			}
+		},
+		"Join1-LastName-Join2-LastName": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/LastName"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/LastName"
+			}
+		},
+		"Join1-FirstName-Join2-FirstName": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/FirstName"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/FirstName"
+			}
+		},
+		"Join1-Salutation-Join2-Salutation": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Salutation"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Salutation"
+			}
+		},
+		"Join1-Name-Join2-Name": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Name"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Name"
+			}
+		},
+		"Join1-Title-Join2-Title": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Title"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Title"
+			}
+		},
+		"Join1-Company-Join2-Company": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Company"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Company"
+			}
+		},
+		"Join1-Street-Join2-Street": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Street"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Street"
+			}
+		},
+		"Join1-City-Join2-City": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/City"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/City"
+			}
+		},
+		"Join1-State-Join2-State": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/State"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/State"
+			}
+		},
+		"Join1-PostalCode-Join2-PostalCode": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/PostalCode"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/PostalCode"
+			}
+		},
+		"Join1-Country-Join2-Country": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Country"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Country"
+			}
+		},
+		"Join1-Latitude-Join2-Latitude": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Latitude"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Latitude"
+			}
+		},
+		"Join1-Longitude-Join2-Longitude": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Longitude"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Longitude"
+			}
+		},
+		"Join1-GeocodeAccuracy-Join2-GeocodeAccuracy": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/GeocodeAccuracy"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/GeocodeAccuracy"
+			}
+		},
+		"Join1-Address-Join2-Address": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Address"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Address"
+			}
+		},
+		"Join1-Phone-Join2-Phone": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Phone"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Phone"
+			}
+		},
+		"Join1-MobilePhone-Join2-MobilePhone": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/MobilePhone"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/MobilePhone"
+			}
+		},
+		"Join1-Fax-Join2-Fax": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Fax"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Fax"
+			}
+		},
+		"Join1-Email-Join2-Email": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Email"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Email"
+			}
+		},
+		"Join1-Website-Join2-Website": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Website"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Website"
+			}
+		},
+		"Join1-PhotoUrl-Join2-PhotoUrl": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/PhotoUrl"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/PhotoUrl"
+			}
+		},
+		"Join1-Description-Join2-Description": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/Description"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Description"
+			}
+		},
+		"Join1-HistoryId-Join2-HistoryId": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/HistoryId"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/HistoryId"
+			}
+		},
+		"Join1-HistoryIsDeleted-Join2-HistoryIsDeleted": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/HistoryIsDeleted"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/HistoryIsDeleted"
+			}
+		},
+		"Join1-HistoryCreatedDate-Join2-HistoryCreatedDate": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/HistoryCreatedDate"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/HistoryCreatedDate"
+			}
+		},
+		"Join1-HistoryCreatedById-Join2-HistoryCreatedById": {
+			"source": {
+				"$ref": "schemas/intro/Join1.schema.json#/properties/HistoryCreatedById"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/HistoryCreatedById"
+			}
+		},
+		"LeadStatus-Id-Join2-StatusId": {
+			"source": {
+				"$ref": "schemas/intro/LeadStatus.schema.json#/properties/Id"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusId"
+			}
+		},
+		"LeadStatus-MasterLabel-Join2-StatusMasterLabel": {
+			"source": {
+				"$ref": "schemas/intro/LeadStatus.schema.json#/properties/MasterLabel"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusMasterLabel"
+			}
+		},
+		"LeadStatus-ApiName-Join2-StatusApiName": {
+			"source": {
+				"$ref": "schemas/intro/LeadStatus.schema.json#/properties/ApiName"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusApiName"
+			}
+		},
+		"LeadStatus-SortOrder-Join2-StatusSortOrder": {
+			"source": {
+				"$ref": "schemas/intro/LeadStatus.schema.json#/properties/SortOrder"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusSortOrder"
+			}
+		},
+		"LeadStatus-IsDefault-Join2-StatusIsDefault": {
+			"source": {
+				"$ref": "schemas/intro/LeadStatus.schema.json#/properties/IsDefault"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusIsDefault"
+			}
+		},
+		"LeadStatus-IsConverted-Join2-StatusIsConverted": {
+			"source": {
+				"$ref": "schemas/intro/LeadStatus.schema.json#/properties/IsConverted"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusIsConverted"
+			}
+		},
+		"LeadStatus-CreatedById-Join2-StatusCreatedById": {
+			"source": {
+				"$ref": "schemas/intro/LeadStatus.schema.json#/properties/CreatedById"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusCreatedById"
+			}
+		},
+		"LeadStatus-CreatedDate-Join2-StatusCreatedDate": {
+			"source": {
+				"$ref": "schemas/intro/LeadStatus.schema.json#/properties/CreatedDate"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusCreatedDate"
+			}
+		},
+		"LeadStatus-LastModifiedById-Join2-StatusLastModifiedById": {
+			"source": {
+				"$ref": "schemas/intro/LeadStatus.schema.json#/properties/LastModifiedById"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusLastModifiedById"
+			}
+		},
+		"LeadStatus-LastModifiedDate-Join2-StatusLastModifiedDate": {
+			"source": {
+				"$ref": "schemas/intro/LeadStatus.schema.json#/properties/LastModifiedDate"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusLastModifiedDate"
+			}
+		},
+		"LeadStatus-SystemModstamp-Join2-StatusSystemModstamp": {
+			"source": {
+				"$ref": "schemas/intro/LeadStatus.schema.json#/properties/SystemModstamp"
+			},
+			"destination": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusSystemModstamp"
+			}
+		},
+		"Join2-Id-LeadData-Id": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Id"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/Id"
+			}
+		},
+		"Join2-IsDeleted-LeadData-IsDeleted": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/IsDeleted"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/IsDeleted"
+			}
+		},
+		"Join2-MasterRecordId-LeadData-MasterRecordId": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/MasterRecordId"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/MasterRecordId"
+			}
+		},
+		"Join2-LastName-LeadData-LastName": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/LastName"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/LastName"
+			}
+		},
+		"Join2-FirstName-LeadData-FirstName": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/FirstName"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/FirstName"
+			}
+		},
+		"Join2-Salutation-LeadData-Salutation": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Salutation"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/Salutation"
+			}
+		},
+		"Join2-Name-LeadData-Name": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Name"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/Name"
+			}
+		},
+		"Join2-Title-LeadData-Title": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Title"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/Title"
+			}
+		},
+		"Join2-Company-LeadData-Company": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Company"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/Company"
+			}
+		},
+		"Join2-Street-LeadData-Street": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Street"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/Street"
+			}
+		},
+		"Join2-City-LeadData-City": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/City"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/City"
+			}
+		},
+		"Join2-State-LeadData-State": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/State"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/State"
+			}
+		},
+		"Join2-PostalCode-LeadData-PostalCode": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/PostalCode"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/PostalCode"
+			}
+		},
+		"Join2-Country-LeadData-Country": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Country"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/Country"
+			}
+		},
+		"Join2-Latitude-LeadData-Latitude": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Latitude"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/Latitude"
+			}
+		},
+		"Join2-Longitude-LeadData-Longitude": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Longitude"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/Longitude"
+			}
+		},
+		"Join2-GeocodeAccuracy-LeadData-GeocodeAccuracy": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/GeocodeAccuracy"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/GeocodeAccuracy"
+			}
+		},
+		"Join2-Address-LeadData-Address": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Address"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/Address"
+			}
+		},
+		"Join2-Phone-LeadData-Phone": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Phone"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/Phone"
+			}
+		},
+		"Join2-MobilePhone-LeadData-MobilePhone": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/MobilePhone"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/MobilePhone"
+			}
+		},
+		"Join2-Fax-LeadData-Fax": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Fax"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/Fax"
+			}
+		},
+		"Join2-Email-LeadData-Email": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/Email"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/Email"
+			}
+		},
+		"Join2-HistoryId-LeadData-HistoryId": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/HistoryId"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/HistoryId"
+			}
+		},
+		"Join2-HistoryIsDeleted-LeadData-HistoryIsDeleted": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/HistoryIsDeleted"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/HistoryIsDeleted"
+			}
+		},
+		"Join2-HistoryCreatedDate-LeadData-HistoryCreatedDate": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/HistoryCreatedDate"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/HistoryCreatedDate"
+			}
+		},
+		"Join2-HistoryCreatedById-LeadData-HistoryCreatedById": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/HistoryCreatedById"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/HistoryCreatedById"
+			}
+		},
+		"Join2-StatusId-LeadData-StatusId": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusId"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/StatusId"
+			}
+		},
+		"Join2-StatusMasterLabel-LeadData-StatusMasterLabel": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusMasterLabel"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/StatusMasterLabel"
+			}
+		},
+		"Join2-StatusApiName-LeadData-StatusApiName": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusApiName"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/StatusApiName"
+			}
+		},
+		"Join2-StatusSortOrder-LeadData-StatusSortOrder": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusSortOrder"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/StatusSortOrder"
+			}
+		},
+		"Join2-StatusIsDefault-LeadData-StatusIsDefault": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusIsDefault"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/StatusIsDefault"
+			}
+		},
+		"Join2-StatusIsConverted-LeadData-StatusIsConverted": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusIsConverted"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/StatusIsConverted"
+			}
+		},
+		"Join2-StatusCreatedById-LeadData-StatusCreatedById": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusCreatedById"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/StatusCreatedById"
+			}
+		},
+		"Join2-StatusCreatedDate-LeadData-StatusCreatedDate": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusCreatedDate"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/StatusCreatedDate"
+			}
+		},
+		"Join2-StatusLastModifiedById-LeadData-StatusLastModifiedById": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusLastModifiedById"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/StatusLastModifiedById"
+			}
+		},
+		"Join2-StatusLastModifiedDate-LeadData-StatusLastModifiedDate": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusLastModifiedDate"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/StatusLastModifiedDate"
+			}
+		},
+		"Join2-StatusSystemModstamp-LeadData-StatusSystemModstamp": {
+			"source": {
+				"$ref": "schemas/intro/Join2.schema.json#/properties/StatusSystemModstamp"
+			},
+			"destination": {
+				"$ref": "schemas/intro/LeadData.schema.json#/properties/StatusSystemModstamp"
+			}
+		}
+    }
+}

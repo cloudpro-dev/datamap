@@ -776,7 +776,7 @@ async function draw(mapPath, viewPath) {
                         <span>${fields[key]['label']}</span>${required ? ' <i class="icon required-icon"></i>' : ''}
                     </div>
                     <div class="field-datatype">${fields[key]['node'].type}</div>
-                    <div class="field-maxlength">(${fields[key]['node'].maxLength})</div>
+                    ${fields[key]['node'].maxLength ? '<div class="field-maxlength">(' + fields[key]['node'].maxLength + ')</div>' : ''}
                 </div>`
             )
             // selection handler
@@ -835,7 +835,7 @@ async function draw(mapPath, viewPath) {
         return {}
     })
     g.graph().rankdir = 'LR'
-    g.graph().ranksep = 125
+    g.graph().ranksep = 200
     g.graph().nodesep = 50
     g.graph().marginx = 35
     g.graph().marginy = 85
@@ -1009,7 +1009,7 @@ $(function () {
     }
 
     showLoadingSpinner(true)
-    loadMap('maps/test.map.json', 'views/test.view.json')
+    loadMap('maps/intro.map.json', 'views/intro.view.json')
 })
 
 /** Node used in dependency graph */
