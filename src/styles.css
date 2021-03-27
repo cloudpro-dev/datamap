@@ -51,12 +51,14 @@ body {
     left:0;
     z-index: 10;
     background-color: white;
+    /*border-radius: 10px 10px 0 0;*/
 }
 .panel-header {
     padding: 8px 10px;
     background-color: #eee;
     display: flex;
     align-items: center;
+    /*border-radius: 10px 10px 0 0;*/
 }
 .panel-header span {
     flex-grow: 1;
@@ -120,7 +122,7 @@ body {
 }
 .field.selected {
     background-color: yellow;
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 .field.matched {
     background-color: greenyellow;

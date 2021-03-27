@@ -566,7 +566,7 @@ const drawFieldArrows = (svg, data, fields, view) => {
     }
 }
 
-/** Redraw any SVG element which is directly or indirectly linked the panelEl */
+/** Redraw SVG arrwos between direct ancenstors and descendants */
 const refreshFieldArrows = (svg, data, fields, view, panelEl) => {
     // get the schema key from the DOM element
     let key = panelEl.data('key')
@@ -574,12 +574,46 @@ const refreshFieldArrows = (svg, data, fields, view, panelEl) => {
     // obtain the schema from the state
     let schema = state.schemas[key];
 
+    // generate configuration for SVG drawing
+    let generateConfig = (view, source, destination) => {
+        let srcParent = $(source.dom[0]).parents('.panel-body')
+        let destParent = $(destination.dom[0]).parents('.panel-body')
+        let srcView = view.schemas.filter(p => p['$ref'] == source.key.substring(0, source.key.indexOf('#')))[0];
+        
+        let config = {
+            source: {
+                el: source.dom[0],
+                minY: srcParent.offset().top,
+                maxY: srcParent.offset().top + srcParent.height(),
+                scrollWidth:
+                    srcParent[0].offsetWidth - srcParent[0].clientWidth,
+                borderWidth: 2, // srcPanel[0].clientTop,
+                animComplete: source.animComplete,
+                multiplicity: source.multiplicity || "",
+                cssClass: srcView.panelClass,
+                svg: source.connector
+            },
+            destination: {
+                el: destination.dom[0],
+                minY: destParent.offset().top,
+                maxY: destParent.offset().top + destParent.height(),
+                scrollWidth:
+                    destParent[0].offsetWidth - destParent[0].clientWidth,
+                borderWidth: 2 // destParent[0].clientTop
+            },
+            selected: source.selected || destination.selected
+        }
+        return config;
+    }
+
     let configs = [];
     for(let i=0; i<schema.fields.length; i++) {
+        // mapped to fields
         let source = schema.fields[i];
         let destination = schema.fields[i].mappedTo
-        // if the field is mapped to a destination
         if(destination != null) {
+            configs.push(generateConfig(view, source, destination));
+            /*
             let srcParent = $(source.dom[0]).parents('.panel-body')
             let destParent = $(destination.dom[0]).parents('.panel-body')
             let srcView = view.schemas.filter(p => p['$ref'] == source.key.substring(0, source.key.indexOf('#')))[0];
@@ -609,6 +643,14 @@ const refreshFieldArrows = (svg, data, fields, view, panelEl) => {
             }
             // add to be rendered later
             configs.push(config)
+            */
+        }
+
+        // mapped from fields
+        source = schema.fields[i].mappedFrom;
+        destination = schema.fields[i]
+        if(source != null) {
+            configs.push(generateConfig(view, source, destination));
         }
     }
 
