@@ -273,16 +273,16 @@ body {
     animation: 1.5s linear infinite spinner;
     animation-play-state: inherit;
     border: solid 3px #dedede;
-    border-bottom-color: #ef6565;
+    border-bottom-color: #94d31b;
     border-radius: 50%;
     content: "";
-    height: 100px;
+    height: 200px;
+    width: 200px;
     left: 50%;
     opacity: inherit;
     position: absolute;
     top: 50%;
     transform: translate3d(-50%, -50%, 0);
-    width: 100px;
     will-change: transform;
 }
 
