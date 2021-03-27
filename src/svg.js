@@ -34,7 +34,7 @@ Svg.prototype.drawCircle = function (x, y, radius, color) {
     svg.appendChild(shape)
 }
 
-Svg.prototype.drawRecentangle = function (x, y, width, height, anim, multiplicity) {
+Svg.prototype.drawRectangle = function (x, y, width, height, anim, multiplicity) {
     
     // equivalent to: <rect x="0" y="0" width="10" height="10" />
     var shape = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
@@ -58,6 +58,27 @@ Svg.prototype.drawRecentangle = function (x, y, width, height, anim, multiplicit
     group.appendChild(label);
     
     return group;
+}
+
+Svg.prototype.refreshRectangle = function (el, x, y, width, height, anim, multiplicity) {
+    
+    // el represents the SVG group (g) element
+    var label = el.querySelector('text')
+    var shape = el.querySelector('rect')
+
+    // equivalent to: <rect x="0" y="0" width="10" height="10" />
+    shape.setAttributeNS(null, 'x', x)
+    shape.setAttributeNS(null, 'y', y)
+    shape.setAttributeNS(null, 'width', width)
+    shape.setAttributeNS(null, 'height', height)
+
+    // equivalent to: <text x="0" y="50" class="anim">Hello</text>
+    label.setAttributeNS(null, 'x', x + 6)
+    label.setAttributeNS(null, 'y', y + 10)
+    label.setAttributeNS(null, 'class', anim === true ? 'anim' : '')
+    label.textContent = multiplicity;
+    
+    return el;
 }
 
 Svg.prototype.drawCurvedLine = function (x1, y1, x2, y2, color, slack) {
@@ -106,34 +127,41 @@ Svg.prototype.drawStraightLine = function(x1, y1, x2, y2, color) {
 }
 
 Svg.prototype.drawStraightArrow = function(x1, y1, x2, y2, color) {
-    var svg = this.canvas
-
-    var group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-
-
     var shape = document.createElementNS('http://www.w3.org/2000/svg', 'line')
     shape.setAttributeNS(null, 'x1', x1)
     shape.setAttributeNS(null, 'y1', y1)
     shape.setAttributeNS(null, 'x2', x2)
     shape.setAttributeNS(null, 'y2', y2)
     shape.setAttributeNS(null, 'stroke', color)
+    
+    var group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     group.append(shape);
 
-    svg.appendChild(group)
+    return group;
 }
 
 Svg.prototype.drawPolyline = function(points) {
-    var svg = this.canvas
     var shape = document.createElementNS('http://www.w3.org/2000/svg', 'polyline')
 
     var str = "";
-    var ps = points.map(p => {
+    points.map(p => {
         str += p.x + "," + p.y + " "
     });
     
     shape.setAttributeNS(null, 'points', str)
     shape.setAttributeNS(null, 'fill', 'none')
-    return svg.appendChild(shape)
+    return shape
+}
+
+Svg.prototype.refreshPolyline = function(el, points) {
+    var str = "";
+    points.map(p => {
+        str += p.x + "," + p.y + " "
+    });
+    
+    el.setAttributeNS(null, 'points', str)
+
+    return el
 }
 
 Svg.prototype.findAbsolutePosition = function (htmlElement) {
@@ -151,14 +179,12 @@ Svg.prototype.findAbsolutePosition = function (htmlElement) {
     }
 }
 
-/** Empty the canvas and leave the arrow head definition in place */
+/** Empty the canvas */
 Svg.prototype.emptyCanvas = function () {
-    var els = document.querySelectorAll("g");
-    
+    // querySelectorAll gives a static list
+    var els = document.getElementById('svg-canvas').querySelectorAll('*')
     for(var i=0; i<els.length; i++) {
-        // dont remove the object definitions in "defs"
-        if(els[i].parentNode.tagName == 'svg')
-            els[i].remove();
+        els[i].remove();
     }
 }
 
@@ -197,6 +223,29 @@ Svg.prototype.drawArrow = function(x, y) {
     return polygon;
 }
 
+Svg.prototype.refreshArrow = function(el, x, y) {
+    // make a triange based on the co-ordinates of the destination
+    var markerWidth = 10;
+    var markerHeight = 5;
+    var points = [
+        {x: x - markerWidth, y: y-(markerHeight/2)}, 
+        {x: x, y: y}, 
+        {x: x - markerWidth, y: y + (markerHeight / 2)}
+    ];
+
+    let str = "";
+    for(let i=0; i<points.length; i++) {
+        str += points[i].x + ' ' + points[i].y
+        if(i+1 != points.length) {
+            str += ', '
+        }
+    }
+    
+    el.setAttributeNS(null, 'points', str)
+    
+    return el;
+}
+
 Svg.prototype.drawGroup = function(rect, line, arrow, selected, anim, cssClass) {
     var svg = this.canvas
     var shape = document.createElementNS('http://www.w3.org/2000/svg', 'g')
@@ -218,17 +267,47 @@ Svg.prototype.drawGroup = function(rect, line, arrow, selected, anim, cssClass) 
     return shape;
 }
 
+Svg.prototype.refreshGroup = function(el, selected, anim, cssClass) {
+    let className = 'svg-connector'
+    if(selected) className += ' selected'
+    if(anim) className += ' anim'
+    if(cssClass) className += ' ' + cssClass
+
+    el.setAttributeNS(null, 'class', className)
+
+    return el;
+}
+
+Svg.prototype.connectPanels = function (left, right) {
+    var svg = this.canvas
+
+    // source
+    var leftPos = this.findAbsolutePosition(left)
+    var x1 = leftPos.x += left.offsetWidth
+    var y1 = leftPos.y
+    y1 += left.offsetHeight / 2
+
+    // destination
+    var rightPos = this.findAbsolutePosition(right)
+    var x2 = rightPos.x
+    var y2 = rightPos.y
+    y2 += right.offsetHeight / 2
+
+    let shape = this.drawStraightArrow(x1, y1, x2, y2, "#CCC");
+    svg.append(shape);
+}
+
 Svg.prototype.connectDivs = function (config) {
     // config
     let left = config.source.el
     let right = config.destination.el
-    let color = config.color
     let scroll = config.source.scrollWidth
     let border = config.source.borderWidth
     let selected = config.selected
     let anim = config.source.animComplete
     let label = config.source.multiplicity
     let cssClass = config.source.cssClass
+    let svgEl = config.source.svg // existing element
     
     var circleRadius = 3 // circle radius
     var markerWidth = 20 // marker width
@@ -257,44 +336,63 @@ Svg.prototype.connectDivs = function (config) {
 
     let visualOffset = 3;
 
-    // multi-point lines with rectangle endings
-    let srcMarker = this.drawRecentangle(x1, y1 - (markerHeight/2) + visualOffset, markerWidth, markerHeight, anim, label)
-    
-    // co-ordinates are the tip of the arrow
-    let destMarker = this.drawArrow(x2, y2 + visualOffset);
-
-    // points for the multi-point arrow line
     var points = [];
     points.push({x: x1, y: y1 + visualOffset});
     points.push({x: x1 + inset, y: y1 + visualOffset});
     points.push({x: x2 - inset, y: y2 + visualOffset});
     points.push({x: x2, y: y2 + visualOffset});
-    let connector = this.drawPolyline(points, color)
 
-    // draw group containing all the elements
-    return this.drawGroup(srcMarker, connector, destMarker, selected, anim, cssClass);
+    // wrap calculated values into a set of arguments
+    var args = {
+        label,
+        x1,
+        y1,
+        x2,
+        y2,
+        markerWidth,
+        markerHeight,
+        points,
+        visualOffset,
+        anim,
+        selected,
+        cssClass,
+        svgEl
+    }
+
+    // draw or refresh based on presence of existing SVG element
+    return svgEl == null ? this.drawConnector(args) : this.refreshConnector(args);
 }
 
-Svg.prototype.connectPanels = function (left, right) {
-    var svg = this.canvas
+/** Draw a connector */
+Svg.prototype.drawConnector = function(config) {
+    // multi-point lines with rectangle endings
+    let srcMarker = this.drawRectangle(config.x1, config.y1 - (config.markerHeight/2) + config.visualOffset, config.markerWidth, config.markerHeight, config.anim, config.label)
+        
+    // co-ordinates are the tip of the arrow
+    let destMarker = this.drawArrow(config.x2, config.y2 + config.visualOffset);
 
-    let markerWidth = 10;
-    let markerHeight = 7;
+    // points for the multi-point arrow line
+    let connector = this.drawPolyline(config.points)
 
-    // source
-    var leftPos = this.findAbsolutePosition(left)
-    var x1 = leftPos.x += left.offsetWidth
-    var y1 = leftPos.y
-    y1 += left.offsetHeight / 2
+    // draw group containing all the elements
+    return this.drawGroup(srcMarker, connector, destMarker, config.selected, config.anim, config.cssClass);
+}
 
-    // destination
-    var rightPos = this.findAbsolutePosition(right)
-    var x2 = rightPos.x
-    var y2 = rightPos.y
-    y2 += right.offsetHeight / 2
+/** Refresh a connector */
+Svg.prototype.refreshConnector = function(config) {
+    // config.el is the main group for the whole connector
 
-    let shape = this.drawStraightArrow(x1, y1, x2, y2, "#CCC");
-    svg.append(shape);
+    // multi-point lines with rectangle endings
+    this.refreshRectangle(config.svgEl.querySelector('g'), config.x1, config.y1 - (config.markerHeight/2) + config.visualOffset, config.markerWidth, config.markerHeight, config.anim, config.label)
+        
+    // co-ordinates are the tip of the arrow
+    this.refreshArrow(config.svgEl.querySelector('polygon'), config.x2, config.y2 + config.visualOffset)
+
+    // points for the multi-point arrow line
+    this.refreshPolyline(config.svgEl.querySelector('polyline'), config.points)
+
+    // update group class name
+    return this.refreshGroup(config.svgEl, config.selected, config.anim, config.cssClass)
 }
 
 export default Svg

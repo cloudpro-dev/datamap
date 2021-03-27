@@ -24,7 +24,7 @@ const state = {
 }
 
 /** Build a dependency Graph */
-function buildDependencyGraph(data, view) {
+const buildDependencyGraph = (data, view) => {
     let nodes = new Map()
     for (let id in data.map) {
         let sourceRef = data.map[id]['source']['$ref']
@@ -74,7 +74,7 @@ const getAncestors = (data, selectedKey) => {
     for (let m in data.map) {
         let dest = data.map[m].destination['$ref']
         let source = data.map[m].source['$ref']
-        //console.log("ancestor", m, source, dest);
+        // console.log("ancestor", m, source, dest);
         // current node points to selectedKey
         if (dest == selectedKey) {
             //console.log("found selected key!", source);
@@ -237,6 +237,7 @@ const scrollFieldIntoView = function(field) {
     return new Promise((resolve) => {
         let listContainer = field.dom.parent('.panel-body')[0]
 
+        // TODO why can we set "fullyInView" to true?
         if(isFieldVisible(field.dom, listContainer, false)) {
             resolve(field);
         }
@@ -446,9 +447,6 @@ const layoutPanels = (g, nodes, schemas, svg, view) => {
     
     for (let [key, val] of nodes.entries()) {
         // console.log("node", key, val, schemas[key].dom);
-
-        // console.log("node.entries",  key, val, calcHeight(key))
-
         g.setNode(key, {
             label: val.name,
             width: schemas[key].dom.width(),
@@ -480,44 +478,28 @@ const layoutPanels = (g, nodes, schemas, svg, view) => {
         // set scrollable panel height 
         // panel height minus header equals body height
         schemas[v].dom.find('.panel-body').css('height', h - schemas[v].dom.find('.panel-header').outerHeight());
-
-        var prevLeft = 0;
-        schemas[v].dom.find('.panel-body').scroll(function (evt) {
-            
-            // only respond to vertical scroll events
-            var currentLeft = $(this).scrollLeft()
-            // refresh arrows on vertical scroll only
-            if (prevLeft != currentLeft) {
-                prevLeft = currentLeft
-            } else {
-                // hiding fields triggers a scroll event
-                if(state.view.showFields === true) {
-                    // only draw arrows if we are showing fields
-                    drawFieldArrows(svg, state.map, state.fields, state.view)
-                }
-            }
-        })
     })
+}
 
-    /*
-    g.edges().forEach(function(e) {
-        console.log("Edge " + e.v + " -> " + e.w + ": " + JSON.stringify(g.edge(e)));
-
-        let points = g.edge(e).points.map(e => {
-            return [e.x, e.y];
-        });
-
-        var polyline = svg.drawPolyline(g.edge(e).points);
-        console.log("polyline", polyline);
-
-        
-
-        // var polyline = draw.polyline(points).fill('none').stroke({ width: 1 })
-     });
-     */
+const onPanelBodyScroll = function (evt, prevLeft, svg) {
+    // only respond to vertical scroll events
+    var currentLeft = $(evt.currentTarget).scrollLeft()
+    var parent = $(evt.currentTarget).parent('.panel')
+    // refresh arrows on vertical scroll only
+    if (prevLeft != currentLeft) {
+        prevLeft = currentLeft
+    } else {
+        // hiding fields triggers a scroll event
+        if(state.view.showFields === true) {
+            // only draw arrows if we are showing fields
+            refreshFieldArrows(svg, state.map, state.fields, state.view, parent)
+        }
+    }
 }
 
 const drawSchemaArrows = function(graph, schemas, svg) {
+    svg.emptyCanvas();
+    
     for(let [key, val] of graph) {
         let source = val;
         // console.log("source", val);
@@ -584,9 +566,59 @@ const drawFieldArrows = (svg, data, fields, view) => {
     }
 }
 
+/** Redraw any SVG element which is directly or indirectly linked the panelEl */
+const refreshFieldArrows = (svg, data, fields, view, panelEl) => {
+    // get the schema key from the DOM element
+    let key = panelEl.data('key')
+
+    // obtain the schema from the state
+    let schema = state.schemas[key];
+
+    let configs = [];
+    for(let i=0; i<schema.fields.length; i++) {
+        let source = schema.fields[i];
+        let destination = schema.fields[i].mappedTo
+        // if the field is mapped to a destination
+        if(destination != null) {
+            let srcParent = $(source.dom[0]).parents('.panel-body')
+            let destParent = $(destination.dom[0]).parents('.panel-body')
+            let srcView = view.schemas.filter(p => p['$ref'] == source.key.substring(0, source.key.indexOf('#')))[0];
+            
+            let config = {
+                source: {
+                    el: source.dom[0],
+                    minY: srcParent.offset().top,
+                    maxY: srcParent.offset().top + srcParent.height(),
+                    scrollWidth:
+                        srcParent[0].offsetWidth - srcParent[0].clientWidth,
+                    borderWidth: 2, // srcPanel[0].clientTop,
+                    animComplete: source.animComplete,
+                    multiplicity: source.multiplicity || "",
+                    cssClass: srcView.panelClass,
+                    svg: source.connector
+                },
+                destination: {
+                    el: destination.dom[0],
+                    minY: destParent.offset().top,
+                    maxY: destParent.offset().top + destParent.height(),
+                    scrollWidth:
+                        destParent[0].offsetWidth - destParent[0].clientWidth,
+                    borderWidth: 2 // destParent[0].clientTop
+                },
+                selected: source.selected || destination.selected
+            }
+            // add to be rendered later
+            configs.push(config)
+        }
+    }
+
+    // update the SVG elements
+    configs.forEach(cfg => svg.connectDivs(cfg))
+}
+
 /** Refresh a panel contents */
-const refreshFields = (id) => {
-    // console.log("refreshFields", id, state.schemas[id]);
+const refreshPanel = (id) => {
+    // console.log("refreshPanel", id, state.schemas[id]);
 
     // create array back-end for ordering the panel entries
     let fields = [...state.schemas[id].fields]
@@ -621,6 +653,9 @@ const refreshFields = (id) => {
         // default
     }
 
+    // remove all elements from panel-body
+    // use "detach" to keep listeners and data
+    state.schemas[id].dom.find('.panel-body > *').detach();
     // insert DOM elements
     for (let i = 0; i < fields.length; i++) {
         state.schemas[id].dom.find('.panel-body').append(fields[i].dom)
@@ -722,6 +757,10 @@ async function draw(mapPath, viewPath) {
             </div>`
         ).data('key', path)
 
+        // add a scroll handler for the panel body
+        let prevLeft = 0;
+        $tpl.find('.panel-body').on('scroll', e => onPanelBodyScroll(e, prevLeft, svg));
+
         // add custom panel class if defined in the view
         view.schemas.forEach(s => s['$ref'] == path && s.panelClass ? $tpl.addClass(s.panelClass) : null);
 
@@ -760,10 +799,14 @@ async function draw(mapPath, viewPath) {
             }
 
             fields[key]['label'] = fields[key]['label'].substring(1) // strip leading forward-slash
-            fields[key]['mapped'] = false
             fields[key]['node'] = JsonPointer.get(json, pointer)
             fields[key]['selected'] = false
             fields[key]['animComplete'] = false
+            fields[key]['mapped'] = false
+            fields[key]['mappedTo'] = null;
+            fields[key]['mappedFrom'] = null;
+            fields[key]['ancestors'] = [];
+            fields[key]['descendants'] = [];
 
             // work out if a field is required
             let required = isFieldRequired(json, pointer);
@@ -780,9 +823,7 @@ async function draw(mapPath, viewPath) {
                 </div>`
             )
             // selection handler
-            .on('click', (evt) =>
-                onFieldSelect(evt, state.map, state.fields)
-            )
+            .on('click', e => onFieldSelect(e, state.map, state.fields))
             // add JSON Pointer to the field data
             .data('key', key)
 
@@ -796,8 +837,8 @@ async function draw(mapPath, viewPath) {
         // update state
         state.schemas[path] = schemas[path]
 
-        // refresh the contents of the panel
-        refreshFields(path)
+        // write fields in the panel
+        refreshPanel(path)
 
         // add the panel to the body of the page
         $('#panels').append($tpl)
@@ -814,11 +855,17 @@ async function draw(mapPath, viewPath) {
             continue;
         }
         if (fields[s]) {
-            fields[s]['mapped'] = true
-            fields[s]['multiplicity'] = data.map[m].multiplicity
+            fields[s].mapped = true
+            fields[s].mappedTo = fields[d];
+            fields[s].multiplicity = data.map[m].multiplicity
+            fields[s].ancestors = getAncestors(data, fields[s].key)
+            fields[s].descendants = getDescendants(data, fields[s].key)
         }
         if (fields[d]) {
-            fields[d]['mapped'] = true
+            fields[d].mapped = true
+            fields[d].mappedFrom = fields[s];
+            fields[d].ancestors = getAncestors(data, fields[d].key)
+            fields[d].descendants = getDescendants(data, fields[d].key)
         }
     }
 
@@ -880,8 +927,6 @@ async function draw(mapPath, viewPath) {
         // layout panels after we remove the fields
         layoutPanels(g, dependencyGraph, schemas, svg, view)
 
-        svg.emptyCanvas()
-
         if(state.view.showFields === true) {
             drawFieldArrows(svg, state.map, state.fields, state.view)
         }
@@ -897,7 +942,7 @@ async function draw(mapPath, viewPath) {
 
     $('#autocomplete').on('keydown', (evt) => {
         clearTimeout(timeoutId)
-        timeoutId = setTimeout(onAutoComplete.bind(null, evt, fields, matched), 350)
+        timeoutId = setTimeout(e => onAutoComplete(evt, fields, matched), 350)
     })
 
     $('#showMappedFieldsOnlyCb').on('change', e => {
@@ -914,8 +959,7 @@ async function draw(mapPath, viewPath) {
         // update all the panels
         for (let key in state.schemas) {
             state.schemas[key].sort = $(e.currentTarget).val()
-            refreshFields(key)
-            // drawFieldArrows(svg, state.map, state.fields)
+            refreshPanel(key)
             onFieldLayoutChange(e)
         }
     })
