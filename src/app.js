@@ -299,13 +299,14 @@ const onFieldSelect = (event, data, fields) => {
                 ...getAncestors(data, key).map(m => state.fields[m]), 
                 ...getDescendants(data, key).map(m => state.fields[m])
             ]
-    
+            // only fires when moving from multi-select to single-select
             let fieldsToClear = [];
             state.selectedFields.forEach(f => {
                 if(fieldsToKeep.indexOf(f) < 0) {
                     fieldsToClear.push(f); // discard
                 }
             })
+            console.log("clearFields", state.fields[key], fieldsToClear);
             clearFields(fieldsToClear)
             state.selectedFields = fieldsToKeep
             return;
@@ -316,6 +317,7 @@ const onFieldSelect = (event, data, fields) => {
             // ancestors/descedants
             clearFields(state.selectedFields)
             state.selectedFields = []
+            $('svg').addClass('selection-made')
         }
     }
     else {
@@ -335,6 +337,9 @@ const onFieldSelect = (event, data, fields) => {
             fieldsToClear.forEach(f => {
                 state.selectedFields.splice(state.selectedFields.indexOf(f), 1)
             });
+            if(state.selectedFields.length == 0) {
+                $('svg').removeClass('selection-made')
+            }
             return; // do not re-select fields
         }
     }

@@ -1,40 +1,32 @@
 {
-    "name": "test-view",
-    "maxPanelHeight": 250,
-    "schemas": [
-        {
-            "$ref": "schemas/test/a.schema.json",
-            "panelClass": "green-panel"
-        },
-        {
-            "$ref": "schemas/test/b.schema.json",
-            "panelClass": "green-panel"
-        },
-        {
-            "$ref": "schemas/test/c.schema.json",
-            "panelHeight": 300,
-            "panelClass": "purple-panel"
-        },
-        {
-            "$ref": "schemas/test/d.schema.json",
-            "panelClass": "gold-panel"
-        },
-        {
-            "$ref": "schemas/test/e.schema.json",
-            "panelClass": "gold-panel"
-        },
-        {
-            "$ref": "schemas/test/f.schema.json",
-            "panelHeight": 500,
-            "panelClass": "gold-panel"
-        },
-        {
-            "$ref": "schemas/test/g.schema.json",
-            "panelClass": "red-panel"
-        },
-        {
-            "$ref": "schemas/test/h.schema.json",
-            "panelClass": "blue-panel"
-        }
-    ]
+  "name": "test-view",
+  "maxPanelHeight": 250,
+  "schemas": [
+    {
+      "$ref": "schemas/test/a.schema.json"
+    },
+    {
+      "$ref": "schemas/test/b.schema.json"
+    },
+    {
+      "$ref": "schemas/test/c.schema.json",
+      "panelHeight": 300
+    },
+    {
+      "$ref": "schemas/test/d.schema.json"
+    },
+    {
+      "$ref": "schemas/test/e.schema.json"
+    },
+    {
+      "$ref": "schemas/test/f.schema.json",
+      "panelHeight": 500
+    },
+    {
+      "$ref": "schemas/test/g.schema.json"
+    },
+    {
+      "$ref": "schemas/test/h.schema.json"
+    }
+  ]
 }

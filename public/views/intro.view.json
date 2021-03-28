@@ -4,23 +4,29 @@
     "schemas": [
         {
             "$ref": "schemas/intro/Join1.schema.json",
-            "panelHeight": 500
+            "panelHeight": 500,
+            "panelClass": "styled-panel purple-panel"
         },
         {
             "$ref": "schemas/intro/Join2.schema.json",
-            "panelHeight": 500
+            "panelHeight": 500,
+            "panelClass": "styled-panel purple-panel"
         },
         {
-            "$ref": "schemas/intro/Lead.schema.json"
+            "$ref": "schemas/intro/Lead.schema.json",
+            "panelClass": "styled-panel green-panel"
         },
         {
-            "$ref": "schemas/intro/LeadData.schema.json"
+            "$ref": "schemas/intro/LeadData.schema.json",
+            "panelClass": "styled-panel gold-panel"
         },
         {
-            "$ref": "schemas/intro/LeadHistory.schema.json"
+            "$ref": "schemas/intro/LeadHistory.schema.json",
+            "panelClass": "styled-panel green-panel"
         },
         {
-            "$ref": "schemas/intro/LeadStatus.schema.json"
+            "$ref": "schemas/intro/LeadStatus.schema.json",
+            "panelClass": "styled-panel green-panel"
         }
     ]
 }

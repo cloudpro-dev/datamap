@@ -220,14 +220,13 @@ Using a `View` you can define a default panel height and also the height of each
 
 The following tasks are considered in scope:
 
-**No more work to do, just test the current implementation!!**
+**No more work to do, just test the current implementation!**
 
 # Defects
 
-1. **When we order the fields (or anytime we show/hide fields) we start to see a delay when using the scroll bar**
+The following defects have been identified during testing:
 
-    This is indicative of a memory leak, probably caused by the refresh of SVG arrows or too many listeners on the DOM elements that are not getting cleaned up as the fields are getting hidden.
-    _Investigation required_
+**No known defects!**
 
 # Future improvements
 

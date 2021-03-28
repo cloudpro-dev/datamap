@@ -126,16 +126,17 @@ Svg.prototype.drawStraightLine = function(x1, y1, x2, y2, color) {
     svg.appendChild(shape)
 }
 
-Svg.prototype.drawStraightArrow = function(x1, y1, x2, y2, color) {
+Svg.prototype.drawStraightArrow = function(x1, y1, x2, y2) {
     var shape = document.createElementNS('http://www.w3.org/2000/svg', 'line')
     shape.setAttributeNS(null, 'x1', x1)
     shape.setAttributeNS(null, 'y1', y1)
     shape.setAttributeNS(null, 'x2', x2)
     shape.setAttributeNS(null, 'y2', y2)
-    shape.setAttributeNS(null, 'stroke', color)
     
     var group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    group.setAttributeNS(null, 'class', 'panel-line')
     group.append(shape);
+
 
     return group;
 }
@@ -293,7 +294,8 @@ Svg.prototype.connectPanels = function (left, right) {
     var y2 = rightPos.y
     y2 += right.offsetHeight / 2
 
-    let shape = this.drawStraightArrow(x1, y1, x2, y2, "#CCC");
+    let shape = this.drawStraightArrow(x1, y1, x2, y2);
+    shape.setAttributeNS(null, 'class', 'panel-line');
     svg.append(shape);
 }
 
