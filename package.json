@@ -1,7 +1,7 @@
 {
   "name": "parcel-simple",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.html",
   "scripts": {
     "start": "parcel serve src/index.html",
     "build": "parcel build src/index.html"

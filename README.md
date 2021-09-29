@@ -1,16 +1,12 @@
-# FieldView
+# DataMap
 
-FieldView is a software solution for visualising the mapping of data between one system and another.
+DataMap is a software solution for visualising the mapping of data between one system and another.
 
-In even the most simple of integrated solutions you will find that data is continually mapped between one solution and another.  A good example of such a mapping is an API which presents data in one form and an application which consumes that data.  The consuming application is unlikely to have the same format as the incoming data and as such some mapping will occur.  When this mapping happens occurs over more than one layer it can become difficult to track this mappings.
+![](images/anim.gif)
 
-One way flow, not an ER tool!
-
-Many different ways to model the same data.
+In even the most simple of integrated solutions you will find that data is continually mapped between one solution and another.  A good example of such a mapping is an API which presents data in one form and an application which consumes that data.  The consuming application is unlikely to have the same format as the incoming data and as such some mapping will occur.  When this mapping happens occurs over more than one layer it can become difficult to track your data.
 
 Find field interactions across multiple systems to help impact assess the size of a change.
-
-# Destination
 
 # Terminology
 
@@ -23,8 +19,9 @@ Don't try to model the technologies, you need to model the partitioned data on a
 Potential sources could be:
 - Web form
 - Interface message
+- Database table
 
-If you have the **same system** in the model twice then you are doing it wrong.
+N.B: If you have the **same system** in the model twice then you are doing it wrong.
 
 ## Destination
 
@@ -155,7 +152,7 @@ Suppose we have the follow piece of JSON data:
     }
 }
 ```
-Using the this Schema to describe the data:
+Using the following Schema to describe the data:
 ```
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -220,7 +217,7 @@ Using a `View` you can define a default panel height and also the height of each
 
 The following tasks are considered in scope:
 
-**No more work to do, just test the current implementation!**
+1. Remove multiplicity from Fields as these don't make sense
 
 # Defects
 
@@ -249,7 +246,7 @@ The following ideas should be considered as future enhancments:
 15. Add some visual grouping and/or labels that represent groups to allow easier identification of which system each schema resides within
 16. Create `Diagram` file which defines a `Map` and also a list of `View` paths which should be selectable by user in drop-down located in the toolbar.
 17. During ingestion of existing payload, populate the `examples` array of the `Schema`.
-18. Use different colours for each non-related panel and match the colour of the arrows to the panel. See [Example](images/introduction2.png)
+18. Use different colours for each non-related panel and match the colour of the arrows to the panel. See [Example](images/Introduction2.png)
 
 ## Field Flow
 
@@ -259,3 +256,23 @@ The ability to simulate data going through the model.  Pass some data into the m
 
 Rules engine which maps rules to fields in the schemas.
 Rules are defined in a seperate set of files to the schemas.
+
+# Getting Started
+
+To build the application use the following command:
+```shell
+npm run build
+```
+This will create a `dist` directory containing all of the necessary files.  
+
+**Note:** This directory will not include any `Map`, `Schema` or `View` definition files.
+
+To start the application use the following command:
+```shell
+npm run start
+```
+
+This will start a local development server on port `1234` which can be used to view the running application.
+```shell
+curl localhost:1234
+```
